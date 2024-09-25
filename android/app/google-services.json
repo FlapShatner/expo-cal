@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "183431916769",
+    "project_id": "expo-app-8a20f",
+    "storage_bucket": "expo-app-8a20f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:183431916769:android:eff6333c801d4654ab1ba0",
+        "android_client_info": {
+          "package_name": "com.jordanroberts.googleauth"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDUK6beaUSM1K7L8AXWYLly7kLF7P2eQSM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

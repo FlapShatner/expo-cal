@@ -6,6 +6,12 @@
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
+    "plugins": [["@react-native-google-signin/google-signin"], [
+      "expo-calendar",
+      {
+        "calendarPermission": "The app needs to access your calendar."
+      }
+    ]],
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
@@ -18,10 +24,20 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "googleServicesFile": "./google-services.json",
+      "package": "com.jordanroberts.googleauth",
+      "versionCode": 1
     },
+    "scheme": "googleauth",
+   
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "bfb5fa5d-aab7-4bd7-888f-02d6bf2be515"
+      }
     }
   }
 }
