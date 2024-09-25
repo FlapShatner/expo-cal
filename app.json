@@ -4,33 +4,40 @@
     "slug": "google-auth",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
-    "userInterfaceStyle": "light",
-    "plugins": [["@react-native-google-signin/google-signin"], [
-      "expo-calendar",
-      {
-        "calendarPermission": "The app needs to access your calendar."
-      }
-    ]],
+    "icon": "./assets/calendar-icon.png",
+    "userInterfaceStyle": "automatic",
+    "plugins": [
+      [
+        "@react-native-google-signin/google-signin"
+      ],
+      [
+        "expo-calendar",
+        {
+          "calendarPermission": "The app needs to access your calendar."
+        }
+      ],
+      ["expo-asset", {
+        "assets": ["./assets/cal_assets/bg_lg.png"]
+      }]
+    ],
     "splash": {
-      "image": "./assets/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "image": "./assets/calendar-icon.png",
+      "resizeMode": "cover",
+      "backgroundColor": "#1A1A1A"
     },
     "ios": {
       "supportsTablet": true
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+        "foregroundImage": "./assets/calendar-icon.png",
+        "backgroundColor": "#1A1A1A"
       },
       "googleServicesFile": "./google-services.json",
       "package": "com.jordanroberts.googleauth",
       "versionCode": 1
     },
     "scheme": "googleauth",
-   
     "web": {
       "favicon": "./assets/favicon.png"
     },

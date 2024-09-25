@@ -1,30 +1,62 @@
 import React, { useEffect, useState } from 'react'
-import { ScrollView, Text, StyleSheet, View, Platform, Button } from 'react-native'
-import * as Calendar from 'expo-calendar'
+import { ScrollView, StyleSheet, useColorScheme, View, Image, Button } from 'react-native'
+import ThemeText from './styled/ThemeText'
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import useCalendar from '../hooks/useCalendar'
+import Day from './day'
+import { ColorOption, colorOptions } from '../data/colorOptions'
 
 export default function Events() {
- const [events, setEvents] = useState<any>([])
- useEffect(() => {
-  const getCalendars = async () => {
-   const { status } = await Calendar.requestCalendarPermissionsAsync()
-   if (status === 'granted') {
-    const calendars = await Calendar.getCalendarsAsync(Calendar.EntityTypes.EVENT)
-    const ids = calendars.map((c: any) => c.id)
-    const events = await Calendar.getEventsAsync([...ids], new Date('2024-05-01'), new Date('2024-12-31'))
-    console.log(events)
-    setEvents(events)
+ const [color, setColor] = useState<ColorOption>(colorOptions[0])
+ const { events, calendars } = useCalendar()
+
+ const getUserColor = async () => {
+  try {
+   const color = await AsyncStorage.getItem('selectedColor')
+   if (color) {
+    setColor(JSON.parse(color))
    }
-   if (status === 'denied') {
-    console.log('The user has denied access to calendars.')
-   }
+  } catch (error) {
+   console.log(error)
   }
-  getCalendars()
+ }
+
+ useEffect(() => {
+  getUserColor()
  }, [])
+
+ const setUserColor = async (color: ColorOption) => {
+  try {
+   await AsyncStorage.setItem('selectedColor', JSON.stringify(color))
+  } catch (error) {
+   console.log(error)
+  }
+ }
+
+ const handleSwitchColor = (color: ColorOption) => {
+  const currentIndex = colorOptions.findIndex((c) => c.id === color.id)
+  const nextIndex = (currentIndex + 1) % colorOptions.length
+  setColor(colorOptions[nextIndex])
+  setUserColor(colorOptions[nextIndex])
+ }
 
  return (
   <ScrollView>
-   <Text>Events</Text>
-   {events && events.map((e: any) => <Text key={e.id}>{e.title} </Text>)}
+   <Button
+    title='Switch Color'
+    onPress={() => handleSwitchColor(color)}
+   />
+   {/* <ThemeText style={styles.text}>{events.length} Events:</ThemeText>
+   {events && events.map((e: any) => <ThemeText key={e.id}>{e.title} </ThemeText>)} */}
+   <Day color={color.value} />
   </ScrollView>
  )
 }
+
+const styles = StyleSheet.create({
+ text: {
+  fontSize: 20,
+  fontWeight: 'bold',
+  marginBottom: 20,
+ },
+})
