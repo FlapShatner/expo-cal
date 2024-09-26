@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { ScrollView, StyleSheet, useColorScheme, View, Image, Button } from 'react-native'
-import ThemeText from '../styled/ThemeText'
+
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import useCalendar, { CalendarEvent, CalendarCalendar } from '../../hooks/useCalendar'
 import Day from './day/day'
