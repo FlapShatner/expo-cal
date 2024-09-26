@@ -11,6 +11,7 @@
   "dependencies": {
     "@react-native-async-storage/async-storage": "^2.0.0",
     "@react-native-google-signin/google-signin": "^13.1.0",
+    "dayjs": "^1.11.13",
     "expo": "~51.0.28",
     "expo-asset": "~10.0.10",
     "expo-calendar": "~13.0.5",
@@ -24,6 +25,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
+    "@iconify-json/ic": "^1.2.0",
     "@types/react": "~18.2.45",
     "typescript": "^5.1.3"
   },

@@ -16,13 +16,19 @@
           "calendarPermission": "The app needs to access your calendar."
         }
       ],
-      ["expo-asset", {
-        "assets": ["./assets/cal_assets/bg_lg.png"]
-      }]
+      [
+        "expo-asset",
+        {
+          "assets": [
+            "./assets/cal_assets/bg_lg_e.png",
+            "./assets/cal_assets/bg_e.png"
+          ]
+        }
+      ]
     ],
     "splash": {
       "image": "./assets/calendar-icon.png",
-      "resizeMode": "cover",
+      "resizeMode": "contain",
       "backgroundColor": "#1A1A1A"
     },
     "ios": {
