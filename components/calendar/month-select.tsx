@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, StyleSheet, Pressable, useColorScheme } from 'react-native'
+import { View, StyleSheet, Pressable } from 'react-native'
 import ThemeText from '../styled/ThemeText'
 import dayjs from '../../lib/dayjs'
 import { getLastMonthYear, getNextMonthYear } from '../../lib/date-utils'
@@ -16,10 +16,10 @@ export default function MonthSelect({
   setYear: (year: number) => void
   setMonth: (month: number) => void
 }) {
-  const colorScheme = useColorScheme()
-  const iconColor = colorScheme === 'dark' ? '#FBFBFB' : '#1A1A1A'
+  const iconColor = '#FBFBFB'
   const selectedMonth = dayjs().month(month - 1).format('MMMM')
   const selectedYear = year
+  console.log('selectedMonth', selectedMonth)
   return (
     <View style={styles.container}>
       <Pressable
@@ -30,7 +30,7 @@ export default function MonthSelect({
           setYear(parseInt(lastYear))
         }}
       >
-        <Ionicons name="chevron-back" size={24} color={iconColor} />
+        <Ionicons name="chevron-back" size={28} color={iconColor} />
       </Pressable>
       <ThemeText style={styles.month}>
         {selectedMonth}
@@ -46,7 +46,7 @@ export default function MonthSelect({
           setYear(parseInt(nextYear))
         }}
       >
-        <Ionicons name="chevron-forward" size={24} color={iconColor} />
+        <Ionicons name="chevron-forward" size={28} color={iconColor} />
       </Pressable>
     </View>
   )
@@ -54,28 +54,28 @@ export default function MonthSelect({
 
 const styles = StyleSheet.create({
   container: {
-    width: '70%',
+    width: '80%',
     paddingHorizontal: 20,
-    marginTop: 10,
+    marginBottom: 10,
+    marginTop: 60,
     marginHorizontal: 'auto',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: 10
+    alignItems: 'center'
   },
   month: {
-    fontSize: 24,
+    fontSize: 28,
     fontWeight: 'semibold',
-    marginBottom: 10
+    marginBottom: 2
   },
   year: {
     textAlign: 'center',
-    marginLeft: 2,
-    fontSize: 24,
-    marginBottom: 10
+    marginLeft: 0,
+    fontSize: 28,
+    marginBottom: 2
   },
   chevron: {
     padding: 8,
-    marginBottom: 8
+    marginBottom: 0
   }
 })

@@ -8,11 +8,12 @@ export default function Weather({ color, weather }: { color: ColorOption, weathe
     const maxTemp = weather ? Math.round(weather?.maxTemp) : 0
     const minTemp = weather ? Math.round(weather?.minTemp) : 0
     const precip = weather ? Math.round(weather?.precipProb) : 0
+    const isTextSmall = maxTemp > 99 && precip > 99
   return (
     <View style={[styles.weather, { backgroundColor: color.value }]}>
-      <Text style={[styles.temp,{ color: color.text }]}>{minTemp}°/ {maxTemp}°</Text>
+      <Text style={[styles.temp,{ color: color.text }, isTextSmall && styles.textSmall]}>{minTemp}°/ {maxTemp}°</Text>
       <View style={styles.precipContainer}>
-      <Text style={[styles.precip,{ color: color.text }]}>{precip}% 
+      <Text style={[styles.precip,{ color: color.text }, isTextSmall && styles.textSmall]}>{precip}% 
       </Text>
       <FontAwesome6 name="droplet" size={8} color={color.text} />
       </View>
@@ -34,7 +35,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between'
   },
   temp: {
-    marginLeft: 4,
+    marginLeft: 6,
     marginBottom: 2,
     fontSize: 12,
     fontWeight: 'bold'
@@ -46,8 +47,11 @@ const styles = StyleSheet.create({
     fontWeight: 'bold'
   },
   precipContainer: {
-    marginRight: 4,
+    marginRight: 6,
     flexDirection: 'row',
     alignItems: 'center'
+  },
+  textSmall: {
+    fontSize: 10
   }
 })

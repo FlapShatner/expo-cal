@@ -2,7 +2,7 @@ import React from 'react'
 import Weekday from './weekday'
 import MonthDay from './month-day'
 import Event from './event'
-import { View, Image, StyleSheet, ScrollView } from 'react-native'
+import { View, Image, StyleSheet, ScrollView, Pressable } from 'react-native'
 import { Day as DayType, trunc } from '../../../lib/date-utils'
 import { ColorOption } from '../../../data/colorOptions'
 import dayjs from '../../../lib/dayjs'
@@ -10,6 +10,7 @@ import { CalendarCalendar, CalendarEvent } from '../../../hooks/useCalendar'
 import { useQuery } from '@tanstack/react-query'
 import { getWeather } from '../../../lib/weather'
 import Weather from './weather'
+import { useStore } from '../../../lib/store'
 
 function Day({
     color,
@@ -20,6 +21,8 @@ function Day({
     day: DayType
     calendarData: { calendarEvents: CalendarEvent[]; calendars: CalendarCalendar[] }
 }) {
+    const setDetailVisible = useStore(state => state.setDetailVisible)
+    const setDayDetails = useStore(state => state.setDayDetails)
     const year = Number(dayjs().format('YYYY'))
     const month = Number(dayjs().format('M'))
     const weatherFetch = async () => {
@@ -36,9 +39,12 @@ function Day({
     const dayLabel = trunc(dayjs(day.date).format('dddd'))
     const calEvents = calendarData.calendarEvents
     const eventsForDay = calEvents?.filter((event) => dayjs(event.startDate).format('YYYY-MM-DD') === dayjs(day.date).format('YYYY-MM-DD'))
-    //   console.log(eventsForDay)
+    const handlePress = () => {
+        setDetailVisible(true)
+        setDayDetails({ date: day.date, weather: todayWeather })
+    }
     return (
-        <View style={styles.dayContainer}>
+        <Pressable style={styles.dayContainer} onPress={handlePress}>
             <Image source={require('../../../assets/cal_assets/bg_lg_e.png')} style={styles.bg} />
             <View style={styles.inner} />
             <View style={styles.header}>
@@ -51,7 +57,7 @@ function Day({
                 ))}
             </ScrollView>
             <Weather weather={todayWeather} color={color} />
-        </View>
+        </Pressable>
     )
 }
 

@@ -24,6 +24,6 @@ const styles = StyleSheet.create({
   },
   weekdayText: {
     fontSize: 11,
-    fontWeight: 'semibold'
+    fontWeight: '600'
   }
 })

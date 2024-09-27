@@ -1,12 +1,20 @@
 import React, { useState } from 'react'
-import { View, StyleSheet, Modal, Pressable, Text } from 'react-native'
+import { View, StyleSheet, Modal } from 'react-native'
+import Trigger from './trigger'
+import Colors from './colors'
+import ModalHeader from './modal-header'
 
 export default function Menu() {
   const [modalVisible, setModalVisible] = useState(false)
+
+  const handleBurgerPress = () => {
+    setModalVisible(!modalVisible)
+  }
+
   return (
     <View style={styles.centeredView}>
       <Modal
-        animationType="slide"
+        animationType="fade"
         transparent={true}
         visible={modalVisible}
         onRequestClose={() => {
@@ -15,16 +23,12 @@ export default function Menu() {
       >
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
-            <Text style={styles.modalText}>Hello World!</Text>
-            <Pressable style={[styles.button, styles.buttonClose]} onPress={() => setModalVisible(!modalVisible)}>
-              <Text style={styles.textStyle}>Hide Modal</Text>
-            </Pressable>
+            <ModalHeader setModalVisible={setModalVisible} modalVisible={modalVisible} />
+            <Colors />
           </View>
         </View>
       </Modal>
-      <Pressable style={[styles.button, styles.buttonOpen]} onPress={() => setModalVisible(true)}>
-        <Text style={styles.textStyle}>Show Modal</Text>
-      </Pressable>
+      <Trigger handleBurgerPress={handleBurgerPress} />
     </View>
   )
 }
@@ -32,43 +36,29 @@ export default function Menu() {
 const styles = StyleSheet.create({
   centeredView: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: 22
+    justifyContent: 'flex-start',
+    marginHorizontal: 5
   },
+
   modalView: {
-    margin: 20,
-    backgroundColor: 'white',
+    marginLeft: 'auto',
+    width: '100%',
+    marginRight: 10,
+    marginTop: 22,
+    paddingHorizontal: 4,
+    paddingVertical: 6,
+    backgroundColor: '#171717',
     borderRadius: 20,
-    padding: 35,
+    borderWidth: 1,
+    borderColor: '#262626',
     alignItems: 'center',
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
       height: 2
     },
-    shadowOpacity: 0.25,
+    shadowOpacity: 0.5,
     shadowRadius: 4,
     elevation: 5
-  },
-  button: {
-    borderRadius: 20,
-    padding: 10,
-    elevation: 2
-  },
-  buttonOpen: {
-    backgroundColor: '#F194FF'
-  },
-  buttonClose: {
-    backgroundColor: '#2196F3'
-  },
-  textStyle: {
-    color: 'white',
-    fontWeight: 'bold',
-    textAlign: 'center'
-  },
-  modalText: {
-    marginBottom: 15,
-    textAlign: 'center'
   }
 })
