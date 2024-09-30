@@ -1,25 +1,24 @@
 import React from 'react'
-import { View, StyleSheet, Modal, Text, Image, Pressable, ImageBackground } from 'react-native'
+import { ImageBackground, Modal, StyleSheet, View } from 'react-native'
 import { useStore } from '../../lib/store'
-import DetailHeader from './detail-header'
 import DetailContent from './detail-content'
+import DetailHeader from './detail-header'
 import DetailWeather from './detail-weather'
+import OutsidePressHandler from 'react-native-outside-press'
 
 export default function DayDetail() {
   const date = useStore(state => state.dayDetails?.date)
   const weather = useStore(state => state.dayDetails?.weather)
+  const events = useStore(state => state.dayDetails?.events)
   const detailVisible = useStore(state => state.detailVisible)
   const setDetailVisible = useStore(state => state.setDetailVisible)
   const color = useStore(state => state.color)
 
   const handleOutsidePress = () => {
-    console.log('pressed')
     setDetailVisible(false)
   }
 
   return (
-   
-   
       <View style={styles.centeredView}>
         <Modal
           animationType="fade"
@@ -29,19 +28,20 @@ export default function DayDetail() {
             setDetailVisible(!detailVisible)
           }}
         >
+            <OutsidePressHandler disabled={!detailVisible} onOutsidePress={handleOutsidePress}>
           <ImageBackground resizeMode="contain" source={require('../../assets/cal_assets/bg_lg_e.png')} style={styles.bg}>
             <View style={styles.centeredView}>
               <View style={styles.modalView}>
                 <View style={[styles.inner, { backgroundColor: color.value }]} />
-                <DetailHeader date={date ?? ''} color={color} />
-                <DetailContent color={color} />
+                <DetailHeader date={date ?? ''} color={color} />  
+                <DetailContent color={color} events={events ?? null} />
                 <DetailWeather color={color} weather={weather ?? null} />
               </View>
             </View>
           </ImageBackground>
+        </OutsidePressHandler>
         </Modal>
-      </View>
-      
+      </View>      
   )
 }
 const styles = StyleSheet.create({

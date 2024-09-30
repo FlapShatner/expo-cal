@@ -1,16 +1,16 @@
-import React from 'react'
-import Weekday from './weekday'
-import MonthDay from './month-day'
-import Event from './event'
-import { View, Image, StyleSheet, ScrollView, Pressable } from 'react-native'
-import { Day as DayType, trunc } from '../../../lib/date-utils'
-import { ColorOption } from '../../../data/colorOptions'
-import dayjs from '../../../lib/dayjs'
-import { CalendarCalendar, CalendarEvent } from '../../../hooks/useCalendar'
 import { useQuery } from '@tanstack/react-query'
-import { getWeather } from '../../../lib/weather'
-import Weather from './weather'
+import React from 'react'
+import { Image, Pressable, ScrollView, StyleSheet, View } from 'react-native'
+import { ColorOption } from '../../../data/colorOptions'
+import { CalendarCalendar, CalendarEvent } from '../../../hooks/useCalendar'
+import { Day as DayType, trunc } from '../../../lib/date-utils'
+import dayjs from '../../../lib/dayjs'
 import { useStore } from '../../../lib/store'
+import { getWeather } from '../../../lib/weather'
+import Event from './event'
+import MonthDay from './month-day'
+import Weather from './weather'
+import Weekday from './weekday'
 
 function Day({
     color,
@@ -23,6 +23,7 @@ function Day({
 }) {
     const setDetailVisible = useStore(state => state.setDetailVisible)
     const setDayDetails = useStore(state => state.setDayDetails)
+    const detailVisible = useStore(state => state.detailVisible)
     const year = Number(dayjs().format('YYYY'))
     const month = Number(dayjs().format('M'))
     const weatherFetch = async () => {
@@ -41,7 +42,7 @@ function Day({
     const eventsForDay = calEvents?.filter((event) => dayjs(event.startDate).format('YYYY-MM-DD') === dayjs(day.date).format('YYYY-MM-DD'))
     const handlePress = () => {
         setDetailVisible(true)
-        setDayDetails({ date: day.date, weather: todayWeather })
+        setDayDetails({ date: day.date, weather: todayWeather, events: eventsForDay })
     }
     return (
         <Pressable style={styles.dayContainer} onPress={handlePress}>

@@ -1,27 +1,30 @@
 if (__DEV__) {
   require('./ReactotronConfig')
 }
-import React from 'react'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { StatusBar } from 'expo-status-bar'
-import { StyleSheet, ScrollView, ImageBackground } from 'react-native'
-import { QueryClientProvider, QueryClient } from '@tanstack/react-query'
+import React from 'react'
+import { ImageBackground, ScrollView, StyleSheet } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Calendar from './components/calendar/calendar'
+import { EventProvider } from 'react-native-outside-press'
 
 const queryClient = new QueryClient()
 
 export default function App() {
   return (
-    <ImageBackground resizeMode="cover" source={require('./assets/cal_assets/mobile.png')} style={styles.bgImg}>
-      <SafeAreaView style={[styles.container]}>
-        <QueryClientProvider client={queryClient}>
-          <ScrollView style={{ width: '100%' }}>
-            <Calendar />
-            <StatusBar />
-          </ScrollView>
-        </QueryClientProvider>
-      </SafeAreaView>
-    </ImageBackground>
+    <EventProvider>
+      <ImageBackground resizeMode="cover" source={require('./assets/cal_assets/mobile.png')} style={styles.bgImg}>
+        <SafeAreaView style={[styles.container]}>
+          <QueryClientProvider client={queryClient}>
+            <ScrollView style={{ width: '100%' }}>
+              <Calendar />
+              <StatusBar />
+            </ScrollView>
+          </QueryClientProvider>
+        </SafeAreaView>
+      </ImageBackground>
+    </EventProvider>
   )
 }
 

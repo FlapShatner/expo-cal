@@ -19,7 +19,6 @@ export default function MonthSelect({
   const iconColor = '#FBFBFB'
   const selectedMonth = dayjs().month(month - 1).format('MMMM')
   const selectedYear = year
-  console.log('selectedMonth', selectedMonth)
   return (
     <View style={styles.container}>
       <Pressable

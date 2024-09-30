@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
-import Days from './days'
-import { View, Text, StyleSheet } from 'react-native'
-import MonthSelect from './month-select'
+import { StyleSheet, View } from 'react-native'
 import dayjs from '../../lib/dayjs'
-import Menu from './menu/menu'
 import DayDetail from '../day-detail/day-detail'
+import Days from './days'
+import Menu from './menu/menu'
+import MonthSelect from './month-select'
 
 export default function Calendar() {
   const initYear = Number(dayjs().format('YYYY'))

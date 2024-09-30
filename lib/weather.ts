@@ -51,7 +51,6 @@ const formatHistWeather = (data: HistWeatherData) => {
 }
 
 export const getWeather = async (zip: number, month: number, year: number): Promise<FormattedWeather[]> => {
- console.log(zip, month, year)
  const isThisMonth = dayjs().month() == month && dayjs().year() == year
  const weatherRes = await fetch(WEATHER_URL(await getCoords(zip)))
  const weatherData = await weatherRes.json()

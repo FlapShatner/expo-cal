@@ -2,15 +2,15 @@ import React, { useEffect } from 'react'
 import { StyleSheet, View } from 'react-native'
 
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import useCalendar, { CalendarEvent, CalendarCalendar } from '../../hooks/useCalendar'
-import Day from './day/day'
-import { useStore } from '../../lib/store'
+import useCalendar, { CalendarCalendar, CalendarEvent } from '../../hooks/useCalendar'
 import { days, Day as DayType } from '../../lib/date-utils'
+import { useStore } from '../../lib/store'
+import Day from './day/day'
 
 export default function Days({ year, month }: { year: number; month: number }) {
   const setColor = useStore(state => state.setColor)
   const color = useStore(state => state.color)
-  const calendarData: { calendarEvents: CalendarEvent[]; calendars: CalendarCalendar[] } = useCalendar()
+  const calendarData: { calendarEvents: CalendarEvent[]; calendars: CalendarCalendar[] } = useCalendar({ eventId: null })
 
   const getUserColor = async () => {
     try {

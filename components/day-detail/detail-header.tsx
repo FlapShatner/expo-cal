@@ -1,7 +1,8 @@
-import React from 'react'
-import { View, Text, StyleSheet, Pressable } from 'react-native'
-import { ColorOption } from '../../data/colorOptions'
 import dayjs from 'dayjs'
+import React from 'react'
+import { StyleSheet, Text, View } from 'react-native'
+import { ColorOption } from '../../data/colorOptions'
+
 export default function DetailHeader({ color, date }: { color: ColorOption; date: string }) {
   const dayLabel = dayjs(date).format('dddd')
   return (
@@ -9,7 +10,6 @@ export default function DetailHeader({ color, date }: { color: ColorOption; date
       <Text style={[styles.headerText, { color: color.text }]}>
         {dayLabel}
       </Text>
-
       <Text style={[styles.dateText, { color: color.text }]}>
         {dayjs(date).format('MMMM D, YYYY')}
       </Text>

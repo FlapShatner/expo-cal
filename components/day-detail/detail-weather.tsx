@@ -1,8 +1,8 @@
-import React from 'react'
-import { View, Text, StyleSheet } from 'react-native'
-import { ColorOption } from '../../data/colorOptions'
-import { FormattedWeather } from '../../lib/weather-types'
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
+import React from 'react';
+import { StyleSheet, Text, View } from 'react-native';
+import { ColorOption } from '../../data/colorOptions';
+import { FormattedWeather } from '../../lib/weather-types';
 
 export default function DetailWeather({ color, weather }: { color: ColorOption, weather: FormattedWeather | null }) {
     const maxTemp = weather ? Math.round(weather?.maxTemp) : 0

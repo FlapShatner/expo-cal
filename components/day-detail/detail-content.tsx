@@ -1,26 +1,35 @@
 import React from 'react'
-import { View, Text, StyleSheet } from 'react-native'
+import { View, StyleSheet, ScrollView } from 'react-native'
 import { ColorOption } from '../../data/colorOptions'
-
-export default function DetailContent({ color }: { color: ColorOption }) {
+import { CalendarEvent } from '../../hooks/useCalendar'
+import { useStore } from '../../lib/store'
+import DetailEvent from './detail-event'
+import EventDetail from './event-detail/event-detail'
+export default function DetailContent({ color, events }: { color: ColorOption; events: CalendarEvent[] | null }) {
+  const isEventDetail = useStore(state => state.isEventDetail)
   return (
     <View style={styles.container}>
-      <Text style={[styles.text, { color: color.text }]}>Detail Content</Text>
-    </View>
+      {isEventDetail ? <EventDetail /> : 
+        <ScrollView contentContainerStyle={styles.scrollContent}>
+          {events?.map((event) => (
+            <DetailEvent color={color} key={event.id} event={event} />
+          ))}
+        </ScrollView>
+      }
+      </View>
+  
   )
 }
 
 const styles = StyleSheet.create({
   container: {
-    position: 'absolute',
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    position: 'absolute',
     width: '98%',
-    height: '65%',
+    height: 300,
     backgroundColor: '#0e0e0e'
   },
-  text: {
-    fontSize: 20
-  }
+  scrollContent: {
+    position: 'relative',
+  },
 })
