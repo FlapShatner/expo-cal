@@ -12,86 +12,94 @@ import MonthDay from './month-day'
 import Weather from './weather'
 import Weekday from './weekday'
 
-function Day({
-    color,
-    day,
-    calendarData
-}: {
-    color: ColorOption
-    day: DayType
-    calendarData: { calendarEvents: CalendarEvent[]; calendars: CalendarCalendar[] }
-}) {
-    const setDetailVisible = useStore(state => state.setDetailVisible)
-    const setDayDetails = useStore(state => state.setDayDetails)
-    const detailVisible = useStore(state => state.detailVisible)
-    const year = Number(dayjs().format('YYYY'))
-    const month = Number(dayjs().format('M'))
-    const weatherFetch = async () => {
-        return getWeather(65804, month - 1, year)
-    }
+function Day({ color, day, calendarData }: { color: ColorOption; day: DayType; calendarData: CalendarEvent[] }) {
+ const setDetailVisible = useStore((state) => state.setDetailVisible)
+ const setDayDetails = useStore((state) => state.setDayDetails)
+ const detailVisible = useStore((state) => state.detailVisible)
+ const year = Number(dayjs().format('YYYY'))
+ const month = Number(dayjs().format('M'))
+ const weatherFetch = async () => {
+  return getWeather(65804, month - 1, year)
+ }
 
-    const weatherQuery = useQuery({
-        queryKey: ['weather'],
-        queryFn: weatherFetch,
-        refetchOnWindowFocus: false
-    })
-    const weatherArray = weatherQuery.data?.filter((weather) => weather.date === day.date)
-    const todayWeather = weatherArray && weatherArray?.length > 0 ? weatherArray[0] : null
-    const dayLabel = trunc(dayjs(day.date).format('dddd'))
-    const calEvents = calendarData.calendarEvents
-    const eventsForDay = calEvents?.filter((event) => dayjs(event.startDate).format('YYYY-MM-DD') === dayjs(day.date).format('YYYY-MM-DD'))
-    const handlePress = () => {
-        setDetailVisible(true)
-        setDayDetails({ date: day.date, weather: todayWeather, events: eventsForDay })
-    }
-    return (
-        <Pressable style={styles.dayContainer} onPress={handlePress}>
-            <Image source={require('../../../assets/cal_assets/bg_lg_e.png')} style={styles.bg} />
-            <View style={styles.inner} />
-            <View style={styles.header}>
-                <Weekday weekday={dayLabel} color={color} />
-                <MonthDay day={day.day} color={color} />
-            </View>
-            <ScrollView>
-                {eventsForDay?.map((event) => (
-                    <Event key={event.id} event={event} color={color} />
-                ))}
-            </ScrollView>
-            <Weather weather={todayWeather} color={color} />
-        </Pressable>
-    )
+ const weatherQuery = useQuery({
+  queryKey: ['weather'],
+  queryFn: weatherFetch,
+  refetchOnWindowFocus: false,
+ })
+ const weatherArray = weatherQuery.data?.filter((weather) => weather.date === day.date)
+ const todayWeather = weatherArray && weatherArray?.length > 0 ? weatherArray[0] : null
+ const dayLabel = trunc(dayjs(day.date).format('dddd'))
+ const calEvents = calendarData
+ const eventsForDay = calEvents?.filter((event) => dayjs(event.startDate).format('YYYY-MM-DD') === dayjs(day.date).format('YYYY-MM-DD'))
+ const hasEvents = eventsForDay?.length > 0
+ const handlePress = () => {
+  setDetailVisible(true)
+  setDayDetails({ date: day.date, weather: todayWeather, events: eventsForDay })
+ }
+ return (
+  <Pressable
+   style={styles.dayContainer}
+   onPress={handlePress}>
+   <Image
+    source={require('../../../assets/cal_assets/bg_lg_e.png')}
+    style={styles.bg}
+   />
+   <View style={styles.inner} />
+   <View style={styles.header}>
+    <Weekday
+     weekday={dayLabel}
+     color={color}
+    />
+    <MonthDay
+     day={day.day}
+     color={color}
+    />
+   </View>
+   {hasEvents &&
+    eventsForDay?.map((event) => (
+     <Event
+      key={event.id}
+      event={event}
+      color={color}
+     />
+    ))}
+   <Weather
+    weather={todayWeather}
+    color={color}
+   />
+  </Pressable>
+ )
 }
 
 const styles = StyleSheet.create({
-    dayContainer: {
-        marginTop: 4,
-        position: 'relative',
-        width: 100,
-        height: 100
-    },
-    bg: {
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        width: 100,
-        height: 100
-    },
-    inner: {
-        position: 'absolute',
-        backgroundColor: '#0e0e0e',
-        borderRadius: 14,
-        top: 4,
-        left: 4,
-        width: 92,
-        height: 92
-    },
-    header: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'flex-start'
-    },
-
-
+ dayContainer: {
+  marginTop: 4,
+  position: 'relative',
+  width: 100,
+  height: 100,
+ },
+ bg: {
+  position: 'absolute',
+  top: 0,
+  left: 0,
+  width: 100,
+  height: 100,
+ },
+ inner: {
+  position: 'absolute',
+  backgroundColor: '#0e0e0e',
+  borderRadius: 14,
+  top: 4,
+  left: 4,
+  width: 92,
+  height: 92,
+ },
+ header: {
+  flexDirection: 'row',
+  justifyContent: 'space-between',
+  alignItems: 'flex-start',
+ },
 })
 
 export default Day
