@@ -6,6 +6,9 @@ type EventFetch = {
  endDate?: string
 } | null
 
+export type CalendarEvent = Calendar.Event
+export type CalendarCalendar = Calendar.Calendar
+
 export const eventsFetch = async () => {
  let startDate = dayjs().subtract(1, 'year').format()
  let endDate = dayjs().add(1, 'year').format()

@@ -1,17 +1,17 @@
 import React, { useState } from 'react'
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
-import { CalendarEvent } from '../../hooks/useCalendar'
-import { useStore } from '../../lib/store'
+import { CalendarEvent } from '../../lib/events'
 import EventText from './event-text'
 import { ColorOption } from '../../data/colorOptions'
 import dayjs from 'dayjs'
 import DeleteEvent from './delete-event'
-import EditEvent from './edit-event'
+import EditEvent from '../edit-event/edit-event'
 import DetailSummary from './detail-summary'
 import DetailInfo from './detail-info'
 
 export default function DetailEvent({ event, color }: { event: CalendarEvent; color: ColorOption }) {
  const [isEventDetail, setIsEventDetail] = useState(false)
+
  const { allDay, startDate, endDate } = event
  const startTime = dayjs(startDate).format('h:mm A')
  const endTime = dayjs(endDate).format('h:mm A')

@@ -1,7 +1,7 @@
 import React from 'react'
 import { Text, View, StyleSheet, ScrollView } from 'react-native'
 import RenderHtml, { useContentWidth } from 'react-native-render-html'
-import { CalendarEvent } from '../../hooks/useCalendar'
+import { CalendarEvent } from '../../lib/events'
 import { ColorOption } from '../../data/colorOptions'
 import DetailLocation from './detail-location'
 export default function DetailInfo({ event, color }: { event: CalendarEvent; color: ColorOption }) {

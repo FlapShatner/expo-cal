@@ -5,6 +5,7 @@ import { useStore } from '../../lib/store'
 import DetailContent from './detail-content'
 import DetailHeader from './detail-header'
 import DetailWeather from './detail-weather'
+import NewEventForm from '../new-event/new-event-form'
 import { useQuery } from '@tanstack/react-query'
 import { dayEventsFetch } from '../../lib/events'
 import dayjs from '../../lib/dayjs'
@@ -18,6 +19,8 @@ export default function DayDetail() {
  const detailVisible = useStore((state) => state.detailVisible)
  const setDetailVisible = useStore((state) => state.setDetailVisible)
  const color = useStore((state) => state.color)
+ const isNewEvent = useStore((state) => state.isNewEvent)
+ const setIsNewEvent = useStore((state) => state.setIsNewEvent)
 
  const fetchEvents = async ({ queryKey }) => {
   const [date] = queryKey
@@ -64,10 +67,14 @@ export default function DayDetail() {
         date={date ?? ''}
         color={color}
        />
-       <DetailContent
-        color={color}
-        events={todayEvents ?? null}
-       />
+       {isNewEvent ? (
+        <NewEventForm />
+       ) : (
+        <DetailContent
+         color={color}
+         events={todayEvents ?? null}
+        />
+       )}
        <DetailWeather
         color={color}
         weather={weather ?? null}

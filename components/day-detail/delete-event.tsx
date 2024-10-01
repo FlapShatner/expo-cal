@@ -1,18 +1,25 @@
 import React, { useState } from 'react'
 import { View, Text, TouchableOpacity, Modal, StyleSheet, ActivityIndicator } from 'react-native'
+import { useStore } from '../../lib/store'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { Ionicons } from '@expo/vector-icons'
 import { deleteEvent } from '../../lib/events'
 
 function DeleteEvent({ eventId }) {
+ const [isLoading, setIsLoading] = useState(false)
  const [open, setOpen] = useState(false)
  const queryClient = useQueryClient()
+ const date = useStore((state) => state.dayDetails?.date)
 
  const mutation = useMutation({
   mutationFn: (eventId: string) => deleteEvent(eventId),
   onSuccess: () => {
+   queryClient.invalidateQueries({ queryKey: [date] })
    queryClient.invalidateQueries({ queryKey: ['events'] })
    setOpen(false)
+  },
+  onSettled: () => {
+   setIsLoading(false)
   },
  })
 
@@ -22,6 +29,7 @@ function DeleteEvent({ eventId }) {
 
  const handleDelete = () => {
   console.log('deleting event', eventId)
+  setIsLoading(true)
   mutation.mutate(eventId)
  }
 
@@ -46,7 +54,7 @@ function DeleteEvent({ eventId }) {
     animationType='fade'>
     <View style={styles.modalOverlay}>
      <View style={styles.modalContent}>
-      {mutation.isPending && (
+      {isLoading && (
        <View style={styles.loadingOverlay}>
         <ActivityIndicator
          size='large'

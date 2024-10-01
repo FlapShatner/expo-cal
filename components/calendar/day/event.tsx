@@ -1,5 +1,5 @@
 import React from 'react'
-import { CalendarEvent } from '../../../hooks/useCalendar'
+import { CalendarEvent } from '../../../lib/events'
 import { View, Text, StyleSheet } from 'react-native'
 import { ColorOption } from '../../../data/colorOptions'
 import { trunc } from '../../../lib/date-utils'

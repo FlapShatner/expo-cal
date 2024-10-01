@@ -1,44 +1,49 @@
 import { create } from 'zustand'
 import { ColorOption, colorOptions } from '../data/colorOptions'
 import { FormattedWeather } from './weather-types'
-import { CalendarEvent } from '../hooks/useCalendar'
+import { CalendarEvent } from '../lib/events'
+
 type DayDetails = {
-  date: string
-  weather: FormattedWeather | null
-  events: CalendarEvent[] | null
+ date: string
+ weather: FormattedWeather | null
+ events: CalendarEvent[] | null
 }
 
 type State = {
-  detailVisible: boolean
-  dayDetails: DayDetails | null
-  color: ColorOption
-  eventId: string | null
-  isEdit: boolean
-  isEventDetail: boolean
+ detailVisible: boolean
+ dayDetails: DayDetails | null
+ color: ColorOption
+ eventId: string | null
+ isEdit: boolean
+ isEventDetail: boolean
+ isNewEvent: boolean
 }
 
 type Actions = {
-  setDetailVisible: (detailVisible: boolean) => void
-  setColor: (newColor: ColorOption) => void
-  setDayDetails: (dayDetails: DayDetails) => void
-  setEventId: (eventId: string) => void
-  setIsEdit: (isEdit: boolean) => void
-  setIsEventDetail: (isEventDetail: boolean) => void
+ setDetailVisible: (detailVisible: boolean) => void
+ setColor: (newColor: ColorOption) => void
+ setDayDetails: (dayDetails: DayDetails) => void
+ setEventId: (eventId: string) => void
+ setIsEdit: (isEdit: boolean) => void
+ setIsEventDetail: (isEventDetail: boolean) => void
+ setIsNewEvent: (isNewEvent: boolean) => void
 }
 
 export type Store = State & Actions
 
 export const useStore = create<Store>()((set) => ({
-  color: colorOptions[0],
-  detailVisible: false,
-  dayDetails: null,
-  eventId: null,
-  isEdit: false,
-  isEventDetail: false,
-  setColor: (newColor: ColorOption) => set(() => ({ color: newColor })),
-  setDetailVisible: (detailVisible: boolean) => set( {detailVisible} ),
-  setDayDetails: (dayDetails: DayDetails) => set(() => ({ dayDetails })),
-  setEventId: (eventId: string) => set(() => ({ eventId })),
-  setIsEdit: (isEdit: boolean) => set(() => ({ isEdit })),
-  setIsEventDetail: (isEventDetail: boolean) => set(() => ({ isEventDetail }))
+ color: colorOptions[0],
+ detailVisible: false,
+ dayDetails: null,
+ eventId: null,
+ isEdit: false,
+ isEventDetail: false,
+ isNewEvent: false,
+ setColor: (newColor: ColorOption) => set(() => ({ color: newColor })),
+ setDetailVisible: (detailVisible: boolean) => set({ detailVisible }),
+ setDayDetails: (dayDetails: DayDetails) => set(() => ({ dayDetails })),
+ setEventId: (eventId: string) => set(() => ({ eventId })),
+ setIsEdit: (isEdit: boolean) => set(() => ({ isEdit })),
+ setIsEventDetail: (isEventDetail: boolean) => set(() => ({ isEventDetail })),
+ setIsNewEvent: (isNewEvent: boolean) => set(() => ({ isNewEvent })),
 }))
