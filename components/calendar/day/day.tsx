@@ -31,7 +31,7 @@ function Day({ color, day, calendarData }: { color: ColorOption; day: DayType; c
  const todayWeather = weatherArray && weatherArray?.length > 0 ? weatherArray[0] : null
  const dayLabel = trunc(dayjs(day.date).format('dddd'))
  const calEvents = calendarData
- const eventsForDay = calEvents?.filter((event) => dayjs(event.startDate).format('YYYY-MM-DD') === dayjs(day.date).format('YYYY-MM-DD'))
+ const eventsForDay = calEvents?.filter((event) => dayjs(event.startDate).utc().format('YYYY-MM-DD') === dayjs(day.date).utc().format('YYYY-MM-DD'))
  const hasEvents = eventsForDay?.length > 0
  const handlePress = () => {
   setDetailVisible(true)

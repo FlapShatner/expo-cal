@@ -21,12 +21,13 @@ export default function DayDetail() {
 
  const fetchEvents = async ({ queryKey }) => {
   const [date] = queryKey
-  const startDate = dayjs(date).startOf('day').utc().format()
-  const endDate = dayjs(date).endOf('day').utc().format()
+  const startDate = dayjs(date).subtract(1, 'day').format()
+  const endDate = dayjs(date).add(1, 'day').format()
   const events = await dayEventsFetch({ startDate, endDate })
+  const filtered = events?.filter((event) => dayjs(event.startDate).utc().format('YYYY-MM-DD') === date)
   console.log('startdate', startDate, 'date', date)
-  console.log('events', events)
-  return events
+  console.log('filtered', filtered)
+  return filtered
  }
 
  const { data: todayEvents, isLoading } = useQuery({
