@@ -1,29 +1,24 @@
-if (__DEV__) {
- require('./ReactotronConfig')
-}
+import { Slot } from 'expo-router'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { StatusBar } from 'expo-status-bar'
 import React from 'react'
 import { ImageBackground, ScrollView, StyleSheet } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import Calendar from './components/calendar/calendar'
 import { EventProvider } from 'react-native-outside-press'
 
 const queryClient = new QueryClient()
 
-export default function App() {
+export default function Layout() {
  return (
   <EventProvider>
    <ImageBackground
     resizeMode='cover'
-    source={require('./assets/cal_assets/mobile.png')}
+    source={require('../assets/cal_assets/mobile.png')}
     style={styles.bgImg}>
     <SafeAreaView style={[styles.container]}>
      <QueryClientProvider client={queryClient}>
-      <ScrollView style={{ width: '100%' }}>
-       <Calendar />
-       <StatusBar />
-      </ScrollView>
+      <Slot />
+      <StatusBar />
      </QueryClientProvider>
     </SafeAreaView>
    </ImageBackground>
@@ -38,7 +33,6 @@ const styles = StyleSheet.create({
   bottom: 8,
  },
  container: {
-  paddingTop: 20,
   backgroundColor: 'transparent',
   flex: 1,
   alignItems: 'center',

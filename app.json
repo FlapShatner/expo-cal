@@ -24,7 +24,8 @@
             "./assets/cal_assets/bg_e.png"
           ]
         }
-      ]
+      ],
+      "expo-router"
     ],
     "splash": {
       "image": "./assets/calendar-icon.png",
@@ -43,7 +44,7 @@
       "package": "com.jordanroberts.googleauth",
       "versionCode": 1
     },
-    "scheme": "googleauth",
+    "scheme": "expo-calendar",
     "web": {
       "favicon": "./assets/favicon.png"
     },

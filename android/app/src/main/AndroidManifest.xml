@@ -26,7 +26,7 @@
         <action android:name="android.intent.action.VIEW"/>
         <category android:name="android.intent.category.DEFAULT"/>
         <category android:name="android.intent.category.BROWSABLE"/>
-        <data android:scheme="googleauth"/>
+        <data android:scheme="expo-calendar"/>
         <data android:scheme="com.jordanroberts.googleauth"/>
         <data android:scheme="exp+google-auth"/>
       </intent-filter>

@@ -1,20 +1,20 @@
 import React from 'react'
 import { Text, StyleSheet, TouchableOpacity } from 'react-native'
 import { useStore } from '../../lib/store'
+import { router } from 'expo-router'
 import { MaterialIcons } from '@expo/vector-icons'
 
 function NewEvent() {
  const color = useStore((state) => state.color)
- const setIsNewEvent = useStore((state) => state.setIsNewEvent)
 
  const handlePress = () => {
-  setIsNewEvent(true)
+  router.push('/new')
  }
 
  return (
   <TouchableOpacity
-   onPress={handlePress}
-   style={[styles.editButton, { backgroundColor: color.value }]}>
+   style={[styles.newButton, { backgroundColor: color.value }]}
+   onPress={handlePress}>
    <MaterialIcons
     name='add'
     color={'#ebedf0'}
@@ -26,17 +26,16 @@ function NewEvent() {
 }
 
 const styles = StyleSheet.create({
- editButton: {
+ newButton: {
+  marginVertical: 6,
+  marginHorizontal: 'auto',
   width: '50%',
-  flexShrink: 1,
   flexDirection: 'row',
   justifyContent: 'center',
   paddingHorizontal: 12,
   paddingVertical: 4,
-  marginVertical: 6,
-  marginHorizontal: 'auto',
+
   borderRadius: 8,
-  backgroundColor: 'transparent',
  },
  text: {
   color: '#ebedf0',

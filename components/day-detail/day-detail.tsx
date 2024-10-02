@@ -5,7 +5,7 @@ import { useStore } from '../../lib/store'
 import DetailContent from './detail-content'
 import DetailHeader from './detail-header'
 import DetailWeather from './detail-weather'
-import NewEventForm from '../new-event/new-event-form'
+import NewEventForm from '../new-event/form/new-event-form'
 import { useQuery } from '@tanstack/react-query'
 import { dayEventsFetch } from '../../lib/events'
 import dayjs from '../../lib/dayjs'
@@ -67,14 +67,10 @@ export default function DayDetail() {
         date={date ?? ''}
         color={color}
        />
-       {isNewEvent ? (
-        <NewEventForm />
-       ) : (
-        <DetailContent
-         color={color}
-         events={todayEvents ?? null}
-        />
-       )}
+       <DetailContent
+        color={color}
+        events={todayEvents ?? null}
+       />
        <DetailWeather
         color={color}
         weather={weather ?? null}

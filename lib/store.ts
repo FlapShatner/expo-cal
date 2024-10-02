@@ -17,6 +17,9 @@ type State = {
  isEdit: boolean
  isEventDetail: boolean
  isNewEvent: boolean
+ newStartDate: Date | null
+ newEndDate: Date | null
+ allDay: boolean
 }
 
 type Actions = {
@@ -27,6 +30,9 @@ type Actions = {
  setIsEdit: (isEdit: boolean) => void
  setIsEventDetail: (isEventDetail: boolean) => void
  setIsNewEvent: (isNewEvent: boolean) => void
+ setNewStartDate: (date: Date) => void
+ setNewEndDate: (date: Date) => void
+ setAllDay: (allDay: boolean) => void
 }
 
 export type Store = State & Actions
@@ -39,6 +45,9 @@ export const useStore = create<Store>()((set) => ({
  isEdit: false,
  isEventDetail: false,
  isNewEvent: false,
+ newStartDate: null,
+ newEndDate: null,
+ allDay: false,
  setColor: (newColor: ColorOption) => set(() => ({ color: newColor })),
  setDetailVisible: (detailVisible: boolean) => set({ detailVisible }),
  setDayDetails: (dayDetails: DayDetails) => set(() => ({ dayDetails })),
@@ -46,4 +55,7 @@ export const useStore = create<Store>()((set) => ({
  setIsEdit: (isEdit: boolean) => set(() => ({ isEdit })),
  setIsEventDetail: (isEventDetail: boolean) => set(() => ({ isEventDetail })),
  setIsNewEvent: (isNewEvent: boolean) => set(() => ({ isNewEvent })),
+ setNewStartDate: (newStartDate: Date) => set(() => ({ newStartDate })),
+ setNewEndDate: (newEndDate: Date) => set(() => ({ newEndDate })),
+ setAllDay: (allDay: boolean) => set(() => ({ allDay })),
 }))
