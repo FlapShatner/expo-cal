@@ -9,6 +9,12 @@ type EventFetch = {
 export type CalendarEvent = Calendar.Event
 export type CalendarCalendar = Calendar.Calendar
 
+export const getCalendars = async () => {
+ await Calendar.requestCalendarPermissionsAsync()
+ const calendars = await Calendar.getCalendarsAsync(Calendar.EntityTypes.EVENT)
+ return calendars
+}
+
 export const eventsFetch = async () => {
  let startDate = dayjs().subtract(1, 'year').format()
  let endDate = dayjs().add(1, 'year').format()
@@ -38,9 +44,4 @@ export const singleEventFetch = async (eventId: string) => {
 
 export const deleteEvent = async (eventId: string) => {
  return await Calendar.deleteEventAsync(eventId)
-}
-
-export const createEvent = async ({ calendarId, eventData }) => {
- await Calendar.requestCalendarPermissionsAsync()
- return await Calendar.createEventAsync(calendarId, eventData)
 }

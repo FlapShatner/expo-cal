@@ -6,7 +6,7 @@ import { MaterialIcons } from '@expo/vector-icons'
 export default function FormButton({ onPress, text }: { onPress: () => void; text: string }) {
  const color = useStore((state) => state.color)
  const handlePress = () => {
-  console.log('handlePress')
+  //   console.log('handlePress')
   onPress()
  }
 

@@ -1,10 +1,11 @@
 import React from 'react'
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
-import { createEvent } from '../../../lib/events'
+import { getCalendars } from '../../../lib/events'
 import { MaterialIcons } from '@expo/vector-icons'
 import { router } from 'expo-router'
 import { useStore } from '../../../lib/store'
 import { colors } from '../../../data/config'
+import * as Calendar from 'expo-calendar'
 
 export default function ControlButtons() {
  const color = useStore((state) => state.color)
@@ -22,23 +23,31 @@ export default function ControlButtons() {
   router.push('/')
  }
 
- const handleSubmit = () => {
-  const eventData = {
-   alarms: ['default'],
-   allDay,
-   availability: 'free',
-   calendarId: 'primary',
-   endDate: newEndDate,
-   endTimeZone: allDay ? 'UTC' : timeZone,
-   location,
-   notes,
-   recurrenceRule: null,
-   startDate: newStartDate,
-   status: 'none',
-   timeZone: allDay ? 'UTC' : timeZone,
-   title,
+ const handleSubmit = async () => {
+  const calendars = await getCalendars()
+  const primary = calendars.filter((c: any) => c.title.includes('@gmail.com'))
+  let calId = primary[0].id
+  if (!calId) {
+   calId = calendars[0].id
   }
-  createEvent({ calendarId: 'primary', eventData })
+  const eventData = {
+   alarms: [],
+   allDay: allDay,
+   availability: undefined,
+   calendarId: calId,
+   endDate: newEndDate ? newEndDate : new Date(),
+   endTimeZone: 'UTC',
+   location: location ? location : '',
+   notes: notes ? notes : '',
+   recurrenceRule: undefined,
+   startDate: newStartDate ? newStartDate : new Date(),
+   status: undefined,
+   timeZone: 'UTC',
+   title: title ? title : '',
+  }
+  //   console.log('eventData', eventData)
+  const result = await Calendar.createEventAsync(calId, eventData)
+  console.log('result', result)
  }
 
  return (

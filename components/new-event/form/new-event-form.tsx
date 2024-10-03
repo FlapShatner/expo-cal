@@ -18,7 +18,7 @@ function NewEventForm() {
  const setNotes = useStore((state) => state.setNotes)
 
  const handleCancel = (inputId: string) => {
-  console.log('cancel', inputId)
+  //   console.log('cancel', inputId)
   if (inputId === 'notes') {
    setShowDescription(false)
    setNotes('')

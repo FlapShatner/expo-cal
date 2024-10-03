@@ -1,5 +1,5 @@
+import React, { useMemo } from 'react'
 import { useQuery } from '@tanstack/react-query'
-import React from 'react'
 import { Image, Pressable, ScrollView, StyleSheet, View } from 'react-native'
 import { ColorOption } from '../../../data/colorOptions'
 import { CalendarCalendar, CalendarEvent } from '../../../lib/events'
@@ -27,11 +27,20 @@ function Day({ color, day, calendarData }: { color: ColorOption; day: DayType; c
   queryFn: weatherFetch,
   refetchOnWindowFocus: false,
  })
+
+ const formatDate = (event: CalendarEvent) => {
+  if (event.timeZone !== 'UTC') {
+   return dayjs(event.startDate).tz(event.timeZone).format('YYYY-MM-DD')
+  }
+  return dayjs(event.startDate).utc().format('YYYY-MM-DD')
+ }
+
  const weatherArray = weatherQuery.data?.filter((weather) => weather.date === day.date)
  const todayWeather = weatherArray && weatherArray?.length > 0 ? weatherArray[0] : null
  const dayLabel = trunc(dayjs(day.date).format('dddd'))
  const calEvents = calendarData
- const eventsForDay = calEvents?.filter((event) => dayjs(event.startDate).utc().format('YYYY-MM-DD') === dayjs(day.date).utc().format('YYYY-MM-DD'))
+ const eventsForDay = useMemo(() => calEvents?.filter((event) => formatDate(event) === dayjs(day.date).utc().format('YYYY-MM-DD')), [calendarData])
+
  const hasEvents = eventsForDay?.length > 0
  const handlePress = () => {
   setDetailVisible(true)

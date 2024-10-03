@@ -26,8 +26,8 @@ export default function DayDetail() {
   const endDate = dayjs(date).add(1, 'day').format()
   const events = await dayEventsFetch({ startDate, endDate })
   const filtered = events?.filter((event) => dayjs(event.startDate).utc().format('YYYY-MM-DD') === date)
-  console.log('startdate', startDate, 'date', date)
-  console.log('filtered', filtered)
+  //   console.log('startdate', startDate, 'date', date)
+  //   console.log('filtered', filtered)
   return filtered
  }
 

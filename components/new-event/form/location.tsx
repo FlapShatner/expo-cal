@@ -27,7 +27,7 @@ export default function Location({ handleCancel }) {
     }}
     minLength={2}
     onPress={(data, details = null) => {
-     console.log('data', data, 'details', details)
+     //  console.log('data', data, 'details', details)
      setLocation(data.description)
     }}
     query={{

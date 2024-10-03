@@ -1,3 +1,6 @@
+if (__DEV__) {
+ require('../ReactotronConfig')
+}
 import { Slot } from 'expo-router'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { StatusBar } from 'expo-status-bar'

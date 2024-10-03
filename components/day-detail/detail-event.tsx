@@ -18,6 +18,7 @@ export default function DetailEvent({ event, color }: { event: CalendarEvent; co
 
  const handlePress = () => {
   setIsEventDetail(!isEventDetail)
+  console.log('event', event)
  }
 
  return (
