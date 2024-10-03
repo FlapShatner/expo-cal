@@ -2,9 +2,9 @@ import React, { useState } from 'react'
 import { DateTimePickerAndroid, DateTimePickerEvent } from '@react-native-community/datetimepicker'
 import BouncyCheckbox from 'react-native-bouncy-checkbox'
 import { View, Text, Pressable, StyleSheet } from 'react-native'
-import { useStore } from '../../../lib/store'
-import { colors } from '../../../data/config'
-import dayjs from '../../../lib/dayjs'
+import { useStore } from '../../lib/store'
+import { colors } from '../../data/config'
+import dayjs from '../../lib/dayjs'
 
 export default function TimeSelect() {
  const color = useStore((state) => state.color)
@@ -15,6 +15,7 @@ export default function TimeSelect() {
  const newStartDate = useStore((state) => state.newStartDate)
  const newEndDate = useStore((state) => state.newEndDate)
  const allDay = useStore((state) => state.allDay)
+ const timeZone = useStore((state) => state.timeZone)
 
  const handlePress = (mode: 'startTime' | 'endTime') => {
   setAllDay(false)
@@ -25,6 +26,7 @@ export default function TimeSelect() {
   if (option === 'startTime')
    DateTimePickerAndroid.open({
     mode: 'time',
+    timeZoneName: timeZone,
     value: newStartDate ? newStartDate : new Date(),
     onChange: (event: DateTimePickerEvent, selectedDate?: Date) => {
      if (selectedDate) setNewStartDate(selectedDate)
@@ -34,6 +36,7 @@ export default function TimeSelect() {
   else if (option === 'endTime')
    DateTimePickerAndroid.open({
     mode: 'time',
+    timeZoneName: timeZone,
     value: newEndDate ? newEndDate : new Date(),
     onChange: (event: DateTimePickerEvent, selectedDate?: Date) => {
      if (selectedDate) setNewEndDate(selectedDate)

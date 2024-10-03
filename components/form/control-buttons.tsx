@@ -1,17 +1,19 @@
 import React from 'react'
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
-import { getCalendars } from '../../../lib/events'
+import { getCalendars } from '../../lib/events'
 import { MaterialIcons } from '@expo/vector-icons'
 import { router } from 'expo-router'
-import { useStore } from '../../../lib/store'
-import { colors } from '../../../data/config'
+import { useStore } from '../../lib/store'
+import { colors } from '../../data/config'
+import dayjs from '../../lib/dayjs'
 import * as Calendar from 'expo-calendar'
 
-export default function ControlButtons() {
+export default function ControlButtons({ isEdit }) {
  const color = useStore((state) => state.color)
  const clearForm = useStore((state) => state.clearForm)
  const newStartDate = useStore((state) => state.newStartDate)
  const newEndDate = useStore((state) => state.newEndDate)
+ const eventId = useStore((state) => state.eventId)
  const allDay = useStore((state) => state.allDay)
  const title = useStore((state) => state.title)
  const notes = useStore((state) => state.notes)
@@ -35,19 +37,21 @@ export default function ControlButtons() {
    allDay: allDay,
    availability: undefined,
    calendarId: calId,
-   endDate: newEndDate ? newEndDate : new Date(),
-   endTimeZone: 'UTC',
+   endDate: newEndDate ? dayjs(newEndDate).toDate() : new Date(),
+   endTimeZone: timeZone ? timeZone : 'UTC',
    location: location ? location : '',
    notes: notes ? notes : '',
    recurrenceRule: undefined,
-   startDate: newStartDate ? newStartDate : new Date(),
+   startDate: newStartDate ? dayjs(newStartDate).toDate() : new Date(),
    status: undefined,
-   timeZone: 'UTC',
+   timeZone: timeZone ? timeZone : 'UTC',
    title: title ? title : '',
   }
-  //   console.log('eventData', eventData)
-  const result = await Calendar.createEventAsync(calId, eventData)
-  console.log('result', result)
+
+  if (isEdit && eventId) {
+   return await Calendar.updateEventAsync(eventId, eventData)
+  }
+  return await Calendar.createEventAsync(calId, eventData)
  }
 
  return (

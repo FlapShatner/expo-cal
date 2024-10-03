@@ -1,6 +1,6 @@
 import React from 'react'
 import { TouchableOpacity, Text, StyleSheet } from 'react-native'
-import { useStore } from '../../../lib/store'
+import { useStore } from '../../lib/store'
 import { MaterialIcons } from '@expo/vector-icons'
 
 export default function FormButton({ onPress, text }: { onPress: () => void; text: string }) {

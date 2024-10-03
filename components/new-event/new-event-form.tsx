@@ -1,13 +1,13 @@
 import React, { useState } from 'react'
 import { View, Text, StyleSheet, TouchableOpacity, TextInput } from 'react-native'
-import { useStore } from '../../../lib/store'
-import { colors } from '../../../data/config'
-import Description from './description'
-import Location from './location'
-import FormButton from './form-button'
-import DateSelect from './date-select'
-import TimeSelect from './time-select'
-import ControlButtons from './control-buttons'
+import { useStore } from '../../lib/store'
+import { colors } from '../../data/config'
+import Description from './form/description'
+import Location from './form/location'
+import FormButton from './form/form-button'
+import DateSelect from './form/date-select'
+import TimeSelect from './form/time-select'
+import ControlButtons from './form/control-buttons'
 
 function NewEventForm() {
  const [showDescription, setShowDescription] = useState(false)

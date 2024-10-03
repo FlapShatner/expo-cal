@@ -2,9 +2,9 @@ import React from 'react'
 import { View, Text, StyleSheet, ScrollView, FlatList } from 'react-native'
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete'
 import Geolocation from '@react-native-community/geolocation'
-import { colors } from '../../../data/config'
+import { colors } from '../../data/config'
 import CancelInput from './cancel-input'
-import { useStore } from '../../../lib/store'
+import { useStore } from '../../lib/store'
 
 Geolocation.setRNConfiguration({
  skipPermissionRequests: true,

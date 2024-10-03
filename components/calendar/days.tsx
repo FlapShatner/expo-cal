@@ -5,15 +5,31 @@ import { eventsFetch } from '../../lib/events'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { days, Day as DayType } from '../../lib/date-utils'
 import { useStore } from '../../lib/store'
+import dayjs from '../../lib/dayjs'
 import Day from './day/day'
 
 export default function Days({ year, month }: { year: number; month: number }) {
  const setColor = useStore((state) => state.setColor)
  const color = useStore((state) => state.color)
 
+ const fetchEvents = async (y: number, m: number) => {
+  const startDate = dayjs()
+   .month(m - 1)
+   .year(y)
+   .startOf('month')
+   .toDate()
+  const endDate = dayjs()
+   .month(m - 1)
+   .year(y)
+   .endOf('month')
+   .add(2, 'day')
+   .toDate()
+  return await eventsFetch({ startDate, endDate })
+ }
+
  const { data: calendarEvents, isLoading } = useQuery({
-  queryKey: ['events'],
-  queryFn: eventsFetch,
+  queryKey: ['events', year, month],
+  queryFn: () => fetchEvents(year, month),
   refetchOnWindowFocus: false,
  })
 

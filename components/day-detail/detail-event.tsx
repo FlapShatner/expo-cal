@@ -18,7 +18,6 @@ export default function DetailEvent({ event, color }: { event: CalendarEvent; co
 
  const handlePress = () => {
   setIsEventDetail(!isEventDetail)
-  console.log('event', event)
  }
 
  return (
@@ -51,7 +50,7 @@ export default function DetailEvent({ event, color }: { event: CalendarEvent; co
     </View>
     {isEventDetail && (
      <View style={styles.buttonsContainer}>
-      <EditEvent eventId={event.id} />
+      <EditEvent eventIdProp={event.id} />
       <DeleteEvent eventId={event.id} />
      </View>
     )}

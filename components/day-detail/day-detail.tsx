@@ -5,7 +5,7 @@ import { useStore } from '../../lib/store'
 import DetailContent from './detail-content'
 import DetailHeader from './detail-header'
 import DetailWeather from './detail-weather'
-import NewEventForm from '../new-event/form/new-event-form'
+import { filterEvents } from '../../lib/date-utils'
 import { useQuery } from '@tanstack/react-query'
 import { dayEventsFetch } from '../../lib/events'
 import dayjs from '../../lib/dayjs'
@@ -19,15 +19,15 @@ export default function DayDetail() {
  const detailVisible = useStore((state) => state.detailVisible)
  const setDetailVisible = useStore((state) => state.setDetailVisible)
  const color = useStore((state) => state.color)
+ const timeZone = useStore((state) => state.timeZone)
 
  const fetchEvents = async ({ queryKey }) => {
   const [date] = queryKey
-  const startDate = dayjs(date).subtract(1, 'day').format()
-  const endDate = dayjs(date).add(1, 'day').format()
+  const startDate = dayjs(date).tz(timeZone).startOf('day').subtract(1, 'day').toString()
+  const endDate = dayjs(date).tz(timeZone).endOf('day').add(1, 'day').toString()
   const events = await dayEventsFetch({ startDate, endDate })
-  const filtered = events?.filter((event) => dayjs(event.startDate).utc().format('YYYY-MM-DD') === date)
-  //   console.log('startdate', startDate, 'date', date)
-  //   console.log('filtered', filtered)
+  if (!events) return
+  const filtered = filterEvents(events, date)
   return filtered
  }
 

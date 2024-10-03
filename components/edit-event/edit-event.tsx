@@ -1,20 +1,24 @@
 import React from 'react'
+import { router } from 'expo-router'
 import { TouchableOpacity, StyleSheet } from 'react-native'
+import { singleEventFetch } from '../../lib/events'
 import { useStore } from '../../lib/store'
 import { MaterialIcons } from '@expo/vector-icons'
 
-function EditEvent({ eventId }) {
- const setIsEdit = useStore((state) => state.setIsEdit)
+function EditEvent({ eventIdProp }) {
+ const eventId = useStore((state) => state.eventId)
  const setEventId = useStore((state) => state.setEventId)
+ const setIsEdit = useStore((state) => state.setIsEdit)
 
- const handleEdit = () => {
-  setEventId(eventId)
+ const handlePress = () => {
+  setEventId(eventIdProp)
   setIsEdit(true)
+  router.push('/edit')
  }
 
  return (
   <TouchableOpacity
-   onPress={handleEdit}
+   onPress={handlePress}
    style={styles.editButton}>
    <MaterialIcons
     name='edit'

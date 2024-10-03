@@ -15,9 +15,7 @@ export const getCalendars = async () => {
  return calendars
 }
 
-export const eventsFetch = async () => {
- let startDate = dayjs().subtract(1, 'year').format()
- let endDate = dayjs().add(1, 'year').format()
+export const eventsFetch = async ({ startDate, endDate }) => {
  await Calendar.requestCalendarPermissionsAsync()
  const calendars = await Calendar.getCalendarsAsync(Calendar.EntityTypes.EVENT)
  const ids = calendars.map((c: any) => c.id)
@@ -29,7 +27,6 @@ export const dayEventsFetch = async (dates: EventFetch) => {
   return
  }
  const { startDate, endDate } = dates
- //  console.log('startdate', startDate, 'enddate', endDate)
  await Calendar.requestCalendarPermissionsAsync()
  const calendars = await Calendar.getCalendarsAsync(Calendar.EntityTypes.EVENT)
  const ids = calendars.map((c: any) => c.id)

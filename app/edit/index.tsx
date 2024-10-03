@@ -1,16 +1,16 @@
 import React from 'react'
 import { useStore } from '../../lib/store'
-import NewEventForm from '../../components/new-event/new-event-form'
 import { View, StyleSheet, Text } from 'react-native'
+import EditEventForm from '../../components/edit-event/edit-event-form'
 
 export default function Page() {
  const color = useStore((state) => state.color)
  return (
   <View style={[styles.container, { backgroundColor: color.value }]}>
    <View style={styles.textContainer}>
-    <Text style={[styles.text, { color: color.text }]}>New Event</Text>
+    <Text style={[styles.text, { color: color.text }]}>Update Event</Text>
    </View>
-   <NewEventForm />
+   <EditEventForm />
   </View>
  )
 }

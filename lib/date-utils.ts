@@ -1,4 +1,5 @@
 import dayjs from './dayjs'
+import { CalendarEvent } from './events'
 
 export function daysInMonth(year: number, month: number) {
  return dayjs().month(month).year(year).daysInMonth()
@@ -118,50 +119,61 @@ export const processDateTime = (date?: string | null, dateTime?: string | null) 
  return { date: processedDate, time: processedTime }
 }
 
-
-
 export function splitDateString(dateString: string): { month: number; year: number } {
-  const [month, year] = dateString.split('_')
-  return { month: parseInt(month, 10), year: parseInt(year, 10) }
- }
- 
- export function getNextMonthYear(month: number, year: number): string {
-  let nextMonth: number
-  let nextYear: number
- 
-  if (month === 12) {
-   nextMonth = 1 // January
-   nextYear = year + 1 // Next year
-  } else {
-   nextMonth = month + 1 // Next month
-   nextYear = year // Same year
-  }
- 
-  return `${nextMonth}_${nextYear}`
- }
- 
- export function getLastMonthYear(month: number, year: number): string {
-  let lastMonth: number
-  let lastYear: number
- 
-  if (month === 1) {
-   lastMonth = 12 // December
-   lastYear = year - 1 // Last year
-  } else {
-   lastMonth = month - 1 // Last month
-   lastYear = year // Same year
-  }
- 
-  return `${lastMonth}_${lastYear}`
- }
- 
- export function trunc(input: string, numChars = 8, elipsis = false): string {
-  if (!input) return ''
-  return input.length > numChars ? input.substring(0, numChars - 1) + (elipsis ? '...' : '') : input
+ const [month, year] = dateString.split('_')
+ return { month: parseInt(month, 10), year: parseInt(year, 10) }
+}
+
+export function getNextMonthYear(month: number, year: number): string {
+ let nextMonth: number
+ let nextYear: number
+
+ if (month === 12) {
+  nextMonth = 1 // January
+  nextYear = year + 1 // Next year
+ } else {
+  nextMonth = month + 1 // Next month
+  nextYear = year // Same year
  }
 
- export type Day = {
-  date: string;
-  day: number;
-  isCurrentMonth: boolean;
+ return `${nextMonth}_${nextYear}`
+}
+
+export function getLastMonthYear(month: number, year: number): string {
+ let lastMonth: number
+ let lastYear: number
+
+ if (month === 1) {
+  lastMonth = 12 // December
+  lastYear = year - 1 // Last year
+ } else {
+  lastMonth = month - 1 // Last month
+  lastYear = year // Same year
+ }
+
+ return `${lastMonth}_${lastYear}`
+}
+
+export function trunc(input: string, numChars = 8, elipsis = false): string {
+ if (!input) return ''
+ return input.length > numChars ? input.substring(0, numChars - 1) + (elipsis ? '...' : '') : input
+}
+
+const formatDate = (event: CalendarEvent) => {
+ if (event.timeZone !== 'UTC') {
+  const formatted = dayjs(event.startDate).format('YYYY-MM-DD')
+  return formatted
+ }
+ return dayjs(event.startDate).utc().format('YYYY-MM-DD')
+}
+
+export function filterEvents(events: CalendarEvent[], date: string) {
+ console.log('date from utils', date)
+ return events.filter((event) => formatDate(event) === date)
+}
+
+export type Day = {
+ date: string
+ day: number
+ isCurrentMonth: boolean
 }

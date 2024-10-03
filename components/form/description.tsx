@@ -1,9 +1,16 @@
 import React from 'react'
 import { View, TextInput, StyleSheet } from 'react-native'
-import { colors } from '../../../data/config'
+import { colors } from '../../data/config'
 import CancelInput from './cancel-input'
+import { useStore } from '../../lib/store'
 
-export default function Description({ handleNotesChange, notes, handleCancel }) {
+export default function Description({ handleCancel }) {
+ const notes = useStore((state) => state.notes)
+ const setNotes = useStore((state) => state.setNotes)
+ const handleNotesChange = (text: string) => {
+  setNotes(text)
+ }
+
  return (
   <View style={styles.inputWrapper}>
    <TextInput
