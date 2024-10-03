@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useState } from 'react'
 import { DateTimePickerAndroid, DateTimePickerEvent } from '@react-native-community/datetimepicker'
 import BouncyCheckbox from 'react-native-bouncy-checkbox'
 import { View, Text, Pressable, StyleSheet } from 'react-native'
@@ -15,6 +15,11 @@ export default function TimeSelect() {
  const newStartDate = useStore((state) => state.newStartDate)
  const newEndDate = useStore((state) => state.newEndDate)
  const allDay = useStore((state) => state.allDay)
+
+ const handlePress = (mode: 'startTime' | 'endTime') => {
+  setAllDay(false)
+  showMode(mode)
+ }
 
  const showMode = (option: 'startTime' | 'endTime') => {
   if (option === 'startTime')
@@ -38,33 +43,33 @@ export default function TimeSelect() {
  }
  return (
   <View style={styles.container}>
-   <View style={styles.inputWrapper}>
+   <View style={[styles.inputWrapper, { opacity: allDay ? 0.5 : 1 }]}>
     <Text style={styles.text}>Start Time</Text>
     <Pressable
      style={styles.dateContainer}
-     onPress={() => showMode('startTime')}>
+     onPress={() => handlePress('startTime')}>
      <Text style={styles.text}>{newStartDate ? dayjs(newStartDate).format('hh:mm a') : dayjs(date).format('hh:mm a')}</Text>
     </Pressable>
    </View>
-   <View style={styles.inputWrapper}>
+   <View style={[styles.inputWrapper, { opacity: allDay ? 0.5 : 1 }]}>
     <Text style={styles.text}>End Time</Text>
     <Pressable
      style={styles.dateContainer}
-     onPress={() => showMode('endTime')}>
+     onPress={() => handlePress('endTime')}>
      <Text style={styles.text}>{newEndDate ? dayjs(newEndDate).format('hh:mm a') : dayjs(date).format('hh:mm a')}</Text>
     </Pressable>
    </View>
    <View style={styles.checkboxContainer}>
+    <Text style={styles.text}>All day</Text>
     <BouncyCheckbox
      disableText
-     size={32}
+     size={34}
      fillColor={color.value}
-     style={{ marginRight: 8 }}
+     innerIconStyle={{ borderColor: allDay ? color.value : '#2e2e2e', borderWidth: 2 }}
      text='All day'
      isChecked={allDay}
      onPress={() => setAllDay(!allDay)}
     />
-    <Text style={styles.text}>All day</Text>
    </View>
   </View>
  )
@@ -96,9 +101,12 @@ const styles = StyleSheet.create({
   marginVertical: 6,
  },
  checkboxContainer: {
-  marginTop: 20,
-  flexDirection: 'row',
-  justifyContent: 'flex-start',
+  flexDirection: 'column',
+  justifyContent: 'center',
   alignItems: 'center',
+  gap: 4,
+ },
+ timeDisabled: {
+  opacity: 0.5,
  },
 })

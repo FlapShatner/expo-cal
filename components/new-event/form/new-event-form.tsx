@@ -2,23 +2,20 @@ import React, { useState } from 'react'
 import { View, Text, StyleSheet, TouchableOpacity, TextInput } from 'react-native'
 import { useStore } from '../../../lib/store'
 import { colors } from '../../../data/config'
-import { MaterialIcons } from '@expo/vector-icons'
+import Description from './description'
 import Location from './location'
 import FormButton from './form-button'
-import CancelInput from './cancel-input'
 import DateSelect from './date-select'
 import TimeSelect from './time-select'
+import ControlButtons from './control-buttons'
 
 function NewEventForm() {
- const setIsNewEvent = useStore((state) => state.setIsNewEvent)
  const [showDescription, setShowDescription] = useState(false)
  const [showLocation, setShowLocation] = useState(false)
- const [title, setTitle] = useState('')
- const [notes, setNotes] = useState('')
-
- const handlePress = () => {
-  setIsNewEvent(false)
- }
+ const title = useStore((state) => state.title)
+ const notes = useStore((state) => state.notes)
+ const setTitle = useStore((state) => state.setTitle)
+ const setNotes = useStore((state) => state.setNotes)
 
  const handleCancel = (inputId: string) => {
   console.log('cancel', inputId)
@@ -42,23 +39,20 @@ function NewEventForm() {
  return (
   <View style={styles.container}>
    <TextInput
-    style={styles.titleInput}
-    placeholder='Create Title'
+    value={title}
+    placeholder='Enter event title'
     placeholderTextColor={colors.textSec}
+    style={styles.titleInput}
     onChangeText={handleTitleChange}
    />
    <DateSelect />
    <TimeSelect />
    {showDescription ? (
-    <View style={styles.inputWrapper}>
-     <TextInput
-      style={[styles.notesInput, { color: colors.textSec }]}
-      placeholder={`Description`}
-      placeholderTextColor={colors.textSec}
-      onChangeText={handleNotesChange}
-     />
-     <CancelInput onPress={() => handleCancel('notes')} />
-    </View>
+    <Description
+     notes={notes}
+     handleNotesChange={handleNotesChange}
+     handleCancel={handleCancel}
+    />
    ) : (
     <FormButton
      text='Add description (optional)'
@@ -66,26 +60,14 @@ function NewEventForm() {
     />
    )}
    {showLocation ? (
-    <View style={styles.locationWrapper}>
-     <Location />
-     <CancelInput onPress={() => handleCancel('location')} />
-    </View>
+    <Location handleCancel={handleCancel} />
    ) : (
     <FormButton
      text='Add location (optional)'
      onPress={() => setShowLocation(true)}
     />
    )}
-   <TouchableOpacity
-    onPress={handlePress}
-    style={styles.submitButton}>
-    <MaterialIcons
-     name='check'
-     color={'#ebedf0'}
-     size={18}
-    />
-    <Text style={styles.text}>Submit</Text>
-   </TouchableOpacity>
+   <ControlButtons />
   </View>
  )
 }
@@ -94,50 +76,17 @@ const styles = StyleSheet.create({
  container: {
   paddingHorizontal: 12,
   backgroundColor: '#000000',
-  height: 300,
+  height: 340,
  },
  titleInput: {
-  marginVertical: 4,
+  fontSize: 24,
+  marginVertical: 8,
   borderRadius: 8,
   paddingVertical: 4,
   paddingHorizontal: 8,
   borderBottomWidth: 1,
   borderColor: colors.fg,
   color: 'white',
- },
- notesInput: {
-  flexGrow: 1,
-  marginVertical: 4,
-  borderRadius: 8,
-  paddingVertical: 4,
-  paddingHorizontal: 8,
-  backgroundColor: '#171717',
-  borderWidth: 1,
-  borderColor: colors.fg,
- },
- submitButton: {
-  width: '50%',
-  flexShrink: 1,
-  flexDirection: 'row',
-  justifyContent: 'center',
-  paddingHorizontal: 12,
-  paddingVertical: 4,
-  marginVertical: 6,
-  marginHorizontal: 'auto',
-  borderRadius: 8,
-  backgroundColor: 'transparent',
- },
- text: {
-  color: '#ebedf0',
-  fontWeight: 'bold',
- },
- inputWrapper: {
-  flexDirection: 'row',
-  alignItems: 'center',
- },
- locationWrapper: {
-  flexDirection: 'row',
-  alignItems: 'center',
  },
 })
 

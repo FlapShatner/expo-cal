@@ -19,8 +19,6 @@ export default function DayDetail() {
  const detailVisible = useStore((state) => state.detailVisible)
  const setDetailVisible = useStore((state) => state.setDetailVisible)
  const color = useStore((state) => state.color)
- const isNewEvent = useStore((state) => state.isNewEvent)
- const setIsNewEvent = useStore((state) => state.setIsNewEvent)
 
  const fetchEvents = async ({ queryKey }) => {
   const [date] = queryKey

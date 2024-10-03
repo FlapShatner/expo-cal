@@ -29,7 +29,7 @@ export default function Layout() {
 const styles = StyleSheet.create({
  bgImg: {
   height: '101%',
-  width: '101%',
+  width: '100%',
   bottom: 8,
  },
  container: {

@@ -2,7 +2,6 @@ import React from 'react'
 import { useStore } from '../../lib/store'
 import NewEventForm from '../../components/new-event/form/new-event-form'
 import { View, StyleSheet, Text } from 'react-native'
-import { colors } from '../../data/config'
 
 export default function Page() {
  const color = useStore((state) => state.color)
@@ -21,9 +20,9 @@ const styles = StyleSheet.create({
   position: 'relative',
   marginTop: '50%',
   borderRadius: 50,
-  width: '97%',
-  marginHorizontal: 4,
-  height: 440,
+  width: '98%',
+  marginHorizontal: 6,
+  height: 480,
  },
  textContainer: {
   paddingVertical: 20,
