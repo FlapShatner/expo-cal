@@ -9,10 +9,12 @@ import DateSelect from '../form/date-select'
 import TimeSelect from '../form/time-select'
 import ControlButtons from '../form/control-buttons'
 import { singleEventFetch } from '../../lib/events'
+import Loading from '../form/loading'
 
 function EditEventForm() {
  const [showDescription, setShowDescription] = useState(false)
  const [showLocation, setShowLocation] = useState(false)
+ const [isPending, setIsPending] = useState(false)
  const eventId = useStore((state) => state.eventId)
  const title = useStore((state) => state.title)
  const setNewStartDate = useStore((state) => state.setNewStartDate)
@@ -34,6 +36,8 @@ function EditEventForm() {
    setNewStartDate(new Date(event.startDate))
    setNewEndDate(new Date(event.endDate))
    setAllDay(event.allDay)
+   if (event.notes) setShowDescription(true)
+   if (event.location) setShowLocation(true)
   }
   fetchEvent()
  })
@@ -79,7 +83,11 @@ function EditEventForm() {
      onPress={() => setShowLocation(true)}
     />
    )}
-   <ControlButtons isEdit={true} />
+   <ControlButtons
+    setIsPending={setIsPending}
+    isEdit={true}
+   />
+   {isPending && <Loading />}
   </View>
  )
 }

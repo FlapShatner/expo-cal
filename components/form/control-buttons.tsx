@@ -8,7 +8,7 @@ import { colors } from '../../data/config'
 import dayjs from '../../lib/dayjs'
 import * as Calendar from 'expo-calendar'
 
-export default function ControlButtons({ isEdit }) {
+export default function ControlButtons({ setIsPending, isEdit }) {
  const color = useStore((state) => state.color)
  const clearForm = useStore((state) => state.clearForm)
  const newStartDate = useStore((state) => state.newStartDate)
@@ -25,7 +25,21 @@ export default function ControlButtons({ isEdit }) {
   router.push('/')
  }
 
+ const submitForm = async ({ eventId, calId, eventData }) => {
+  if (isEdit && eventId) {
+   const result = await Calendar.updateEventAsync(eventId, eventData)
+   setIsPending(false)
+   router.push('/')
+   return result
+  }
+  const result = await Calendar.createEventAsync(calId, eventData)
+  setIsPending(false)
+  router.push('/')
+  return result
+ }
+
  const handleSubmit = async () => {
+  setIsPending(true)
   const calendars = await getCalendars()
   const primary = calendars.filter((c: any) => c.title.includes('@gmail.com'))
   let calId = primary[0].id
@@ -48,10 +62,8 @@ export default function ControlButtons({ isEdit }) {
    title: title ? title : '',
   }
 
-  if (isEdit && eventId) {
-   return await Calendar.updateEventAsync(eventId, eventData)
-  }
-  return await Calendar.createEventAsync(calId, eventData)
+  const result = await submitForm({ eventId, calId, eventData })
+  return result
  }
 
  return (

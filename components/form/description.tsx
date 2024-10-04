@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { View, TextInput, StyleSheet } from 'react-native'
 import { colors } from '../../data/config'
 import CancelInput from './cancel-input'
@@ -17,6 +17,7 @@ export default function Description({ handleCancel }) {
     style={[styles.notesInput, { color: colors.textSec }]}
     placeholder={`Description`}
     value={notes}
+    selectTextOnFocus={true}
     placeholderTextColor={colors.textSec}
     onChangeText={handleNotesChange}
    />

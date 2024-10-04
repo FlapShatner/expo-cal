@@ -1,17 +1,19 @@
 import React, { useState } from 'react'
-import { View, Text, StyleSheet, TouchableOpacity, TextInput } from 'react-native'
+import { View, Text, StyleSheet, ActivityIndicator, TextInput } from 'react-native'
 import { useStore } from '../../lib/store'
 import { colors } from '../../data/config'
-import Description from './form/description'
-import Location from './form/location'
-import FormButton from './form/form-button'
-import DateSelect from './form/date-select'
-import TimeSelect from './form/time-select'
-import ControlButtons from './form/control-buttons'
+import Description from '../form/description'
+import Location from '../form/location'
+import FormButton from '../form/form-button'
+import Loading from '../form/loading'
+import DateSelect from '../form/date-select'
+import TimeSelect from '../form/time-select'
+import ControlButtons from '../form/control-buttons'
 
 function NewEventForm() {
  const [showDescription, setShowDescription] = useState(false)
  const [showLocation, setShowLocation] = useState(false)
+ const [isPending, setIsPending] = useState(false)
  const title = useStore((state) => state.title)
  const notes = useStore((state) => state.notes)
  const setTitle = useStore((state) => state.setTitle)
@@ -48,11 +50,7 @@ function NewEventForm() {
    <DateSelect />
    <TimeSelect />
    {showDescription ? (
-    <Description
-     notes={notes}
-     handleNotesChange={handleNotesChange}
-     handleCancel={handleCancel}
-    />
+    <Description handleCancel={handleCancel} />
    ) : (
     <FormButton
      text='Add description (optional)'
@@ -67,7 +65,11 @@ function NewEventForm() {
      onPress={() => setShowLocation(true)}
     />
    )}
-   <ControlButtons />
+   <ControlButtons
+    setIsPending={setIsPending}
+    isEdit={false}
+   />
+   {isPending && <Loading />}
   </View>
  )
 }

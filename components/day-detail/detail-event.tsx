@@ -16,6 +16,8 @@ export default function DetailEvent({ event, color }: { event: CalendarEvent; co
  const startTime = dayjs(startDate).format('h:mm A')
  const endTime = dayjs(endDate).format('h:mm A')
 
+ const canModify = event.organizerEmail
+
  const handlePress = () => {
   setIsEventDetail(!isEventDetail)
  }

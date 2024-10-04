@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { View, Text, StyleSheet, ScrollView, FlatList } from 'react-native'
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete'
 import Geolocation from '@react-native-community/geolocation'
@@ -13,17 +13,26 @@ Geolocation.setRNConfiguration({
 })
 
 export default function Location({ handleCancel }) {
+ const locRef = React.useRef<any>(null)
  const location = useStore((state) => state.location)
  const setLocation = useStore((state) => state.setLocation)
  const [error, setError] = React.useState<any>(null)
  const API_KEY = process.env.EXPO_PUBLIC_GOOGLE_API_KEY
 
+ useEffect(() => {
+  if (location) {
+   locRef.current.setAddressText(location)
+  }
+ }, [])
+
  return (
   <View style={styles.locationWrapper}>
    <GooglePlacesAutocomplete
+    ref={locRef}
     placeholder='Search for a location'
     textInputProps={{
      placeholderTextColor: colors.textSec,
+     selectTextOnFocus: true,
     }}
     minLength={2}
     onPress={(data, details = null) => {

@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
   flex: 1,
   position: 'absolute',
   width: '98%',
-  height: 300,
+  height: 260,
   backgroundColor: '#0e0e0e',
  },
  scrollContent: {
