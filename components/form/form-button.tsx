@@ -10,10 +10,11 @@ export default function FormButton({ onPress, text }: { onPress: () => void; tex
   onPress()
  }
 
+ const bgColor = color.value
  return (
   <TouchableOpacity
    onPress={handlePress}
-   style={[styles.editButton, { backgroundColor: color.value }]}>
+   style={[styles.editButton, { backgroundColor: bgColor }]}>
    <Text style={styles.text}>{text}</Text>
   </TouchableOpacity>
  )

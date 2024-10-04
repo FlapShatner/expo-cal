@@ -16,16 +16,17 @@ export default function DetailEvent({ event, color }: { event: CalendarEvent; co
  const startTime = dayjs(startDate).format('h:mm A')
  const endTime = dayjs(endDate).format('h:mm A')
 
- const canModify = event.organizerEmail
-
  const handlePress = () => {
   setIsEventDetail(!isEventDetail)
  }
 
+ const bgColor = color.value
+ const ulColor = color.ul
+
  return (
   <TouchableOpacity
    onPress={handlePress}
-   style={[styles.container, { borderBottomColor: color.ul, borderBottomWidth: 1 }]}>
+   style={[styles.container, { borderBottomColor: ulColor, borderBottomWidth: 1 }]}>
    <View style={styles.eventContainer}>
     <View style={styles.timeContainer}>
      {allDay ? (
@@ -37,7 +38,7 @@ export default function DetailEvent({ event, color }: { event: CalendarEvent; co
       </View>
      )}
     </View>
-    <View style={[styles.detailsContainer, { borderLeftWidth: 1, borderLeftColor: color.value }]}>
+    <View style={[styles.detailsContainer, { borderLeftWidth: 1, borderLeftColor: bgColor }]}>
      <DetailSummary
       event={event}
       open={isEventDetail}

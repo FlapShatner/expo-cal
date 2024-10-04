@@ -10,19 +10,21 @@ export default function Weather({ color, weather }: { color: ColorOption; weathe
  const minTemp = weather ? Math.round(weather?.minTemp) : 0
  const precip = weather ? Math.round(weather?.precipProb) : 0
  const isTextSmall = maxTemp > 99 && precip > 99
+ const bgColor = color.value
+ const textColor = color.text
  return (
-  <View style={[styles.weather, { backgroundColor: color.value }]}>
+  <View style={[styles.weather, { backgroundColor: bgColor }]}>
    {showWeather && (
     <>
-     <Text style={[styles.temp, { color: color.text }, isTextSmall && styles.textSmall]}>
+     <Text style={[styles.temp, { color: textColor }, isTextSmall && styles.textSmall]}>
       {minTemp}°/ {maxTemp}°
      </Text>
      <View style={styles.precipContainer}>
-      <Text style={[styles.precip, { color: color.text }, isTextSmall && styles.textSmall]}>{precip}%</Text>
+      <Text style={[styles.precip, { color: textColor }, isTextSmall && styles.textSmall]}>{precip}%</Text>
       <FontAwesome6
        name='droplet'
        size={8}
-       color={color.text}
+       color={textColor}
       />
      </View>
     </>

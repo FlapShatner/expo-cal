@@ -11,9 +11,11 @@ function NewEvent() {
   router.push('/new')
  }
 
+ const bgColor = color.value
+
  return (
   <TouchableOpacity
-   style={[styles.newButton, { backgroundColor: color.value }]}
+   style={[styles.newButton, { backgroundColor: bgColor }]}
    onPress={handlePress}>
    <MaterialIcons
     name='add'

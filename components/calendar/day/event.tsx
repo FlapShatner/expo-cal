@@ -12,23 +12,25 @@ export default function Event({ event, color }: { event: CalendarEvent; color: C
   }
   return dayjs(datetime).format('h:mm a')
  }
+
+ const colorValue = color.value
  return (
-  <View style={styles(color).eventContainer}>
-   <Text style={styles(color).eventTime}>{time(event.startDate.toString())}</Text>
-   <Text style={styles(color).event}>- {trunc(event.title, 10, true)}</Text>
+  <View style={styles(colorValue).eventContainer}>
+   <Text style={styles(colorValue).eventTime}>{time(event.startDate.toString())}</Text>
+   <Text style={styles(colorValue).event}>- {trunc(event.title, 10, true)}</Text>
   </View>
  )
 }
 
-const styles = (color: ColorOption) =>
+const styles = (color: string) =>
  StyleSheet.create({
   event: {
-   color: color.value,
+   color: color,
    fontSize: 9,
    fontWeight: 'bold',
   },
   eventTime: {
-   color: color.value,
+   color: color,
    fontSize: 8,
    fontWeight: 'bold',
    marginRight: 1,

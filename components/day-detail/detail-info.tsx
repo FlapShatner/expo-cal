@@ -9,12 +9,14 @@ export default function DetailInfo({ event, color }: { event: CalendarEvent; col
  const hasNotes = !!event.notes
  const hasLocation = !!event.location
  const notesHtml = { html: event.notes }
+ const bgColor = color.value
+ const ulColor = color.ul
  return (
   <View style={styles.container}>
    {hasNotes && (
-    <View style={[styles.descriptionContainer, { backgroundColor: color.ul }]}>
+    <View style={[styles.descriptionContainer, { backgroundColor: ulColor }]}>
      <RenderHtml
-      baseStyle={{ color: color.value }}
+      baseStyle={{ color: bgColor }}
       contentWidth={275}
       source={notesHtml}
      />
@@ -27,8 +29,8 @@ export default function DetailInfo({ event, color }: { event: CalendarEvent; col
     />
    )}
    {!hideEmail && (
-    <View style={[styles.creatorContainer, { backgroundColor: color.ul }]}>
-     <Text style={[styles.creatorText, { color: color.value }]}>Event creator: {event.organizerEmail}</Text>
+    <View style={[styles.creatorContainer, { backgroundColor: ulColor }]}>
+     <Text style={[styles.creatorText, { color: bgColor }]}>Event creator: {event.organizerEmail}</Text>
     </View>
    )}
   </View>

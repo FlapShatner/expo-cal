@@ -16,16 +16,17 @@ export default function DetailLocation({ location, color }: { location: string; 
   }
   return true
  }
+ const bgColor = color.value
  return (
   <View style={styles.locationContainer}>
    <MaterialIcons
-    color={color.value}
+    color={bgColor}
     name='location-pin'
     style={styles.icon}
    />
    <View style={styles.locationTextContainer}>
-    {showPlaceName() && <Text style={[styles.locationName, { color: color.value }]}>{loc.name}</Text>}
-    <Text style={[styles.locationAddress, { color: color.value }]}>{loc.address ?? loc}</Text>
+    {showPlaceName() && <Text style={[styles.locationName, { color: bgColor }]}>{loc.name}</Text>}
+    <Text style={[styles.locationAddress, { color: bgColor }]}>{loc.address ?? loc}</Text>
    </View>
   </View>
  )

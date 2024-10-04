@@ -66,11 +66,14 @@ export default function ControlButtons({ setIsPending, isEdit }) {
   return result
  }
 
+ const bgColor = color.value
+ const fgColor = colors.fg
+
  return (
   <View style={styles.submitButtonContainer}>
    <TouchableOpacity
     onPress={handleCancel}
-    style={[styles.controlButton, { borderColor: colors.fg }]}>
+    style={[styles.controlButton, { borderColor: fgColor }]}>
     <MaterialIcons
      name='cancel'
      color={'#ebedf0'}
@@ -80,7 +83,7 @@ export default function ControlButtons({ setIsPending, isEdit }) {
    </TouchableOpacity>
    <TouchableOpacity
     onPress={handleSubmit}
-    style={[styles.controlButton, { backgroundColor: color.value }]}>
+    style={[styles.controlButton, { backgroundColor: bgColor }]}>
     <MaterialIcons
      name='check'
      color={'#ebedf0'}

@@ -1,11 +1,21 @@
-import React from 'react'
+import { useNavigation } from 'expo-router'
+import Providers from '../components/providers'
+import React, { useEffect } from 'react'
 import Calendar from '../components/calendar/calendar'
 import { ScrollView } from 'react-native'
 
-export default function Page() {
+export default function Home() {
+ const nav = useNavigation()
+ useEffect(() => {
+  nav.setOptions({
+   headerShown: false,
+  })
+ }, [])
  return (
-  <ScrollView style={{ width: '100%' }}>
-   <Calendar />
-  </ScrollView>
+  <Providers>
+   <ScrollView style={{ width: '100%' }}>
+    <Calendar />
+   </ScrollView>
+  </Providers>
  )
 }

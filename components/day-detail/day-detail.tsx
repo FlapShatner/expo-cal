@@ -41,6 +41,8 @@ export default function DayDetail() {
   setDetailVisible(false)
  }
 
+ const bgColor = color.value
+
  return (
   <View style={styles.centeredView}>
    <Modal
@@ -60,7 +62,7 @@ export default function DayDetail() {
      style={styles.bg}>
      <View style={styles.centeredView}>
       <View style={styles.modalView}>
-       <View style={[styles.inner, { backgroundColor: color.value }]} />
+       <View style={[styles.inner, { backgroundColor: bgColor }]} />
        <DetailHeader
         date={date ?? ''}
         color={color}

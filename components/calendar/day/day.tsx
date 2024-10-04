@@ -1,5 +1,6 @@
 import React from 'react'
 import { useQuery } from '@tanstack/react-query'
+import { router } from 'expo-router'
 import { Image, Pressable, ScrollView, StyleSheet, View } from 'react-native'
 import { ColorOption } from '../../../data/colorOptions'
 import { CalendarCalendar, CalendarEvent } from '../../../lib/events'
@@ -45,7 +46,8 @@ function Day({ color, day, calendarData }: { color: ColorOption; day: DayType; c
 
  const hasEvents = eventsForDay?.length > 0
  const handlePress = () => {
-  setDetailVisible(true)
+  //   setDetailVisible(true)
+  router.push('modal')
   setDayDetails({ date: day.date, weather: todayWeather, events: eventsForDay })
  }
  return (

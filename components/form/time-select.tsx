@@ -44,6 +44,8 @@ export default function TimeSelect() {
     is24Hour: false,
    })
  }
+
+ const bgColor = color.value
  return (
   <View style={styles.container}>
    <View style={[styles.inputWrapper, { opacity: allDay ? 0.5 : 1 }]}>
@@ -67,8 +69,8 @@ export default function TimeSelect() {
     <BouncyCheckbox
      disableText
      size={34}
-     fillColor={color.value}
-     innerIconStyle={{ borderColor: allDay ? color.value : '#2e2e2e', borderWidth: 2 }}
+     fillColor={bgColor}
+     innerIconStyle={{ borderColor: allDay ? bgColor : '#2e2e2e', borderWidth: 2 }}
      text='All day'
      isChecked={allDay}
      onPress={() => setAllDay(!allDay)}
