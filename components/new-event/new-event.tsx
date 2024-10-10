@@ -8,7 +8,7 @@ function NewEvent() {
  const color = useStore((state) => state.color)
 
  const handlePress = () => {
-  router.push('/new')
+  router.push('/modal/new')
  }
 
  const bgColor = color.value

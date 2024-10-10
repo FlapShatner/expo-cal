@@ -18,13 +18,16 @@ export default function Colors() {
 
  return (
   <View style={styles.container}>
-   {colorOptions.map((color) => (
-    <Pressable
-     onPress={() => selectColor(color)}
-     key={color.id}
-     style={[styles.color, { backgroundColor: color.value }]}
-    />
-   ))}
+   {colorOptions.map((color) => {
+    const bgColor = color.value
+    return (
+     <Pressable
+      onPress={() => selectColor(color)}
+      key={color.id}
+      style={[styles.color, { backgroundColor: bgColor }]}
+     />
+    )
+   })}
   </View>
  )
 }

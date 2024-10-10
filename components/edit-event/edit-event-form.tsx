@@ -94,9 +94,13 @@ function EditEventForm() {
 
 const styles = StyleSheet.create({
  container: {
+  position: 'absolute',
   paddingHorizontal: 12,
+  paddingTop: 40,
   backgroundColor: '#000000',
-  height: 340,
+  width: '98%',
+  aspectRatio: 1,
+  borderRadius: 70,
  },
  titleInput: {
   fontSize: 24,

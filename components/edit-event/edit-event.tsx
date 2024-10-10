@@ -13,7 +13,7 @@ function EditEvent({ eventIdProp }) {
  const handlePress = () => {
   setEventId(eventIdProp)
   setIsEdit(true)
-  router.push('/edit')
+  router.push('/modal/edit')
  }
 
  return (

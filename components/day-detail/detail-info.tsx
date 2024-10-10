@@ -30,7 +30,8 @@ export default function DetailInfo({ event, color }: { event: CalendarEvent; col
    )}
    {!hideEmail && (
     <View style={[styles.creatorContainer, { backgroundColor: ulColor }]}>
-     <Text style={[styles.creatorText, { color: bgColor }]}>Event creator: {event.organizerEmail}</Text>
+     <Text style={[styles.creatorText, { color: bgColor }]}>Event creator: </Text>
+     <Text style={[styles.creatorText, { color: bgColor }]}>{event.organizerEmail}</Text>
     </View>
    )}
   </View>
@@ -57,7 +58,8 @@ const styles = StyleSheet.create({
  creatorContainer: {
   marginTop: 4,
   flex: 1,
-  flexDirection: 'row',
+  flexDirection: 'column',
+  paddingVertical: 3,
   paddingHorizontal: 4,
   borderRadius: 4,
   width: '95%',

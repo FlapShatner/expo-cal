@@ -1,15 +1,37 @@
 import React from 'react'
-import { View, StyleSheet, ScrollView } from 'react-native'
+import { View, StyleSheet, ScrollView, Pressable } from 'react-native'
 import { ColorOption } from '../../data/colorOptions'
-import { CalendarEvent } from '../../lib/events'
+import { CalendarEvent, dayEventsFetch } from '../../lib/events'
 import NewEvent from '../new-event/new-event'
 import DetailEvent from './detail-event'
-export default function DetailContent({ color, events }: { color: ColorOption; events: CalendarEvent[] | null }) {
+import dayjs from '../../lib/dayjs'
+import { useStore } from '../../lib/store'
+import { filterEvents } from '../../lib/date-utils'
+import { useQuery } from '@tanstack/react-query'
+export default function DetailContent() {
+ const date = useStore((state) => state.dayDetails?.date)
+ const color = useStore((state) => state.color)
+ const timeZone = useStore((state) => state.timeZone)
+ const fetchEvents = async ({ queryKey }) => {
+  const [date] = queryKey
+  const startDate = dayjs(date).tz(timeZone).startOf('day').subtract(1, 'day').toString()
+  const endDate = dayjs(date).tz(timeZone).endOf('day').add(1, 'day').toString()
+  const events = await dayEventsFetch({ startDate, endDate })
+  if (!events) return
+  const filtered = filterEvents(events, date)
+  return filtered
+ }
+
+ const { data: todayEvents, isLoading } = useQuery({
+  queryKey: [date],
+  queryFn: fetchEvents,
+  refetchOnWindowFocus: false,
+ })
  return (
-  <View style={styles.container}>
+  <Pressable style={styles.container}>
    <ScrollView contentContainerStyle={styles.scrollContent}>
     <NewEvent />
-    {events?.map((event) => (
+    {todayEvents?.map((event) => (
      <DetailEvent
       color={color}
       key={event.id}
@@ -17,7 +39,7 @@ export default function DetailContent({ color, events }: { color: ColorOption; e
      />
     ))}
    </ScrollView>
-  </View>
+  </Pressable>
  )
 }
 

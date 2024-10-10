@@ -2,7 +2,7 @@ if (__DEV__) {
  require('../ReactotronConfig')
 }
 import { View, StyleSheet } from 'react-native'
-import { Stack } from 'expo-router'
+import { Stack, Slot } from 'expo-router'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import React from 'react'
 import { EventProvider } from 'react-native-outside-press'
@@ -18,7 +18,15 @@ export default function Layout() {
       name='modal'
       options={{
        headerShown: false,
-       presentation: 'transparentModal',
+       presentation: 'containedTransparentModal',
+       animation: 'fade',
+      }}
+     />
+     <Stack.Screen
+      name='index'
+      options={{
+       headerShown: false,
+       presentation: 'containedTransparentModal',
        animation: 'fade',
       }}
      />

@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { View, Text, StyleSheet, ActivityIndicator, TextInput } from 'react-native'
+import React, { useState, useEffect } from 'react'
+import { View, Text, StyleSheet, ActivityIndicator, TextInput, Pressable } from 'react-native'
 import { useStore } from '../../lib/store'
 import { colors } from '../../data/config'
 import Description from '../form/description'
@@ -18,9 +18,13 @@ function NewEventForm() {
  const notes = useStore((state) => state.notes)
  const setTitle = useStore((state) => state.setTitle)
  const setNotes = useStore((state) => state.setNotes)
+ const clearForm = useStore((state) => state.clearForm)
+
+ useEffect(() => {
+  clearForm()
+ }, [])
 
  const handleCancel = (inputId: string) => {
-  //   console.log('cancel', inputId)
   if (inputId === 'notes') {
    setShowDescription(false)
    setNotes('')
@@ -39,7 +43,7 @@ function NewEventForm() {
  }
 
  return (
-  <View style={styles.container}>
+  <Pressable style={styles.container}>
    <TextInput
     value={title}
     placeholder='Enter event title'
@@ -70,15 +74,19 @@ function NewEventForm() {
     isEdit={false}
    />
    {isPending && <Loading />}
-  </View>
+  </Pressable>
  )
 }
 
 const styles = StyleSheet.create({
  container: {
+  position: 'absolute',
   paddingHorizontal: 12,
+  paddingTop: 40,
   backgroundColor: '#000000',
-  height: 340,
+  width: '98%',
+  aspectRatio: 1,
+  borderRadius: 70,
  },
  titleInput: {
   fontSize: 24,

@@ -1,7 +1,8 @@
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6'
 import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import { Pressable, StyleSheet, Text, View } from 'react-native'
 import { ColorOption } from '../../data/colorOptions'
+import { usePathname } from 'expo-router'
 import { FormattedWeather } from '../../lib/weather-types'
 
 export default function DetailWeather({ color, weather }: { color: ColorOption; weather: FormattedWeather | null }) {
@@ -9,21 +10,29 @@ export default function DetailWeather({ color, weather }: { color: ColorOption; 
  const minTemp = weather ? Math.round(weather?.minTemp) : 0
  const precip = weather ? Math.round(weather?.precipProb) : 0
 
+ const path = usePathname()
+ const isNew = path === '/modal/new'
+ const isEdit = path === '/modal/edit'
+
  const textColor = color.text
  return (
-  <View style={[styles.weather]}>
-   <Text style={[styles.temp, { color: textColor }]}>
-    {minTemp}°/ {maxTemp}°
-   </Text>
-   <View style={styles.precipContainer}>
-    <Text style={[styles.precip, { color: textColor }]}>{precip}%</Text>
-    <FontAwesome6
-     name='droplet'
-     size={16}
-     color={textColor}
-    />
-   </View>
-  </View>
+  <Pressable style={[styles.weather]}>
+   {!isNew && !isEdit && (
+    <>
+     <Text style={[styles.temp, { color: textColor }]}>
+      {minTemp}°/ {maxTemp}°
+     </Text>
+     <View style={styles.precipContainer}>
+      <Text style={[styles.precip, { color: textColor }]}>{precip}%</Text>
+      <FontAwesome6
+       name='droplet'
+       size={16}
+       color={textColor}
+      />
+     </View>
+    </>
+   )}
+  </Pressable>
  )
 }
 

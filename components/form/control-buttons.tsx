@@ -22,19 +22,19 @@ export default function ControlButtons({ setIsPending, isEdit }) {
 
  const handleCancel = () => {
   clearForm()
-  router.push('/')
+  router.push('/modal')
  }
 
  const submitForm = async ({ eventId, calId, eventData }) => {
   if (isEdit && eventId) {
    const result = await Calendar.updateEventAsync(eventId, eventData)
    setIsPending(false)
-   router.push('/')
+   router.push('/modal')
    return result
   }
   const result = await Calendar.createEventAsync(calId, eventData)
   setIsPending(false)
-  router.push('/')
+  router.push('/modal')
   return result
  }
 
