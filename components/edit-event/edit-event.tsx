@@ -23,7 +23,7 @@ function EditEvent({ eventIdProp }) {
    <MaterialIcons
     name='edit'
     color={'#ebedf0'}
-    size={18}
+    size={20}
    />
   </TouchableOpacity>
  )
@@ -32,6 +32,7 @@ function EditEvent({ eventIdProp }) {
 const styles = StyleSheet.create({
  editButton: {
   marginVertical: 6,
+  padding: 6,
   borderRadius: 8,
   backgroundColor: 'transparent',
  },

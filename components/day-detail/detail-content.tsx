@@ -12,6 +12,7 @@ export default function DetailContent() {
  const date = useStore((state) => state.dayDetails?.date)
  const color = useStore((state) => state.color)
  const timeZone = useStore((state) => state.timeZone)
+
  const fetchEvents = async ({ queryKey }) => {
   const [date] = queryKey
   const startDate = dayjs(date).tz(timeZone).startOf('day').subtract(1, 'day').toString()

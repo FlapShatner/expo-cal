@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
 
  detailsContainer: {
   flexDirection: 'column',
-  width: '77%',
+  width: '73%',
   paddingLeft: 12,
  },
  buttonsContainer: {

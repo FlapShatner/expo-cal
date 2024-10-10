@@ -67,10 +67,7 @@ export default function DayDetail() {
         date={date ?? ''}
         color={color}
        />
-       <DetailContent
-        color={color}
-        events={todayEvents ?? null}
-       />
+       <DetailContent />
        <DetailWeather
         color={color}
         weather={weather ?? null}

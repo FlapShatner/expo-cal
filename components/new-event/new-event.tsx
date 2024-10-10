@@ -6,8 +6,13 @@ import { MaterialIcons } from '@expo/vector-icons'
 
 function NewEvent() {
  const color = useStore((state) => state.color)
+ const clearForm = useStore((state) => state.clearForm)
+ const setLocation = useStore((state) => state.setLocation)
+ const setNotes = useStore((state) => state.setNotes)
 
  const handlePress = () => {
+  setLocation('')
+  setNotes('')
   router.push('/modal/new')
  }
 
@@ -20,7 +25,7 @@ function NewEvent() {
    onPress={handlePress}>
    <MaterialIcons
     name='add'
-    color={'#ebedf0'}
+    color={textColor}
     size={18}
    />
    <Text style={[styles.text, { color: textColor }]}>New Event</Text>

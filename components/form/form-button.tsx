@@ -24,12 +24,13 @@ export default function FormButton({ onPress, text }: { onPress: () => void; tex
 const styles = StyleSheet.create({
  editButton: {
   marginVertical: 6,
-  width: '50%',
+  width: '55%',
   padding: 8,
   borderRadius: 8,
  },
  text: {
   color: '#ebedf0',
+  fontSize: 14,
   fontWeight: 'bold',
  },
 })

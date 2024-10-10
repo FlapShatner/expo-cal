@@ -45,7 +45,7 @@ function DeleteEvent({ eventId }) {
     <Ionicons
      name='trash'
      style={styles.icon}
-     size={18}
+     size={20}
     />
    </TouchableOpacity>
    <Modal
@@ -86,11 +86,12 @@ const styles = StyleSheet.create({
  deleteButton: {
   marginVertical: 6,
   borderRadius: 8,
+  padding: 6,
   backgroundColor: 'transparent',
  },
  icon: {
-  width: 16,
-  height: 16,
+  width: 20,
+  height: 20,
   color: '#961717',
  },
  modalOverlay: {

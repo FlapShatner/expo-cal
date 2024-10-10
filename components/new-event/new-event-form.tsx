@@ -19,8 +19,10 @@ function NewEventForm() {
  const setTitle = useStore((state) => state.setTitle)
  const setNotes = useStore((state) => state.setNotes)
  const clearForm = useStore((state) => state.clearForm)
+ const setEventId = useStore((state) => state.setEventId)
 
  useEffect(() => {
+  setEventId('')
   clearForm()
  }, [])
 
