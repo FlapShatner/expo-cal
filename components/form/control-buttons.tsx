@@ -68,6 +68,7 @@ export default function ControlButtons({ setIsPending, isEdit }) {
 
  const bgColor = color.value
  const fgColor = colors.fg
+ const textColor = color.text
 
  return (
   <View style={styles.submitButtonContainer}>
@@ -86,10 +87,10 @@ export default function ControlButtons({ setIsPending, isEdit }) {
     style={[styles.controlButton, { backgroundColor: bgColor }]}>
     <MaterialIcons
      name='check'
-     color={'#ebedf0'}
+     color={textColor}
      size={18}
     />
-    <Text style={styles.text}>Submit</Text>
+    <Text style={[styles.text, { color: textColor }]}>Submit</Text>
    </TouchableOpacity>
   </View>
  )

@@ -12,6 +12,7 @@ function NewEvent() {
  }
 
  const bgColor = color.value
+ const textColor = color.text
 
  return (
   <TouchableOpacity
@@ -22,7 +23,7 @@ function NewEvent() {
     color={'#ebedf0'}
     size={18}
    />
-   <Text style={styles.text}>New Event</Text>
+   <Text style={[styles.text, { color: textColor }]}>New Event</Text>
   </TouchableOpacity>
  )
 }
