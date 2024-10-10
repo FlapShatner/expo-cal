@@ -178,27 +178,27 @@ export type Day = {
  isCurrentMonth: boolean
 }
 
-export function findEventsWithMultipleDays(events: CalendarEvent[]): { id: string; dateRange: string[] }[] {
- return events
-  .filter((event) => {
-   const start = dayjs(event.startDate)
-   const end = dayjs(event.endDate)
-   // We only care if the endDate is a later calendar day than startDate
-   return end.isAfter(start, 'day')
-  })
-  .map((event) => {
-   const start = dayjs(event.startDate)
-   const end = dayjs(event.endDate)
-   const dateRange: string[] = []
+export function splitMultiDayEvents(events: CalendarEvent[]): CalendarEvent[] {
+ const newEventsArray: CalendarEvent[] = []
+ events.forEach((event) => {
+  const start = dayjs(event.startDate)
+  const end = dayjs(event.endDate)
+  const dayDifference = end.diff(start, 'day')
 
-   // Create an array of all dates from startDate to endDate
-   for (let date = start; date.isBefore(end) || date.isSame(end, 'day'); date = date.add(1, 'day')) {
-    dateRange.push(date.format('YYYY-MM-DD')) // Push only the date part (YYYY-MM-DD)
+  if (dayDifference <= 1) {
+   newEventsArray.push(event)
+  } else {
+   for (let i = 1; i <= dayDifference; i++) {
+    const newDate = start.add(i, 'day')
+    newEventsArray.push({
+     ...event,
+     startDate: newDate.format('YYYY-MM-DD'),
+     endDate: newDate.format('YYYY-MM-DD'),
+     allDay: true,
+    })
    }
+  }
+ })
 
-   return {
-    id: event.id,
-    dateRange,
-   }
-  })
+ return newEventsArray
 }

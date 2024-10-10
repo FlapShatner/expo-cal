@@ -20,6 +20,8 @@ function NewEventForm() {
  const setNotes = useStore((state) => state.setNotes)
  const clearForm = useStore((state) => state.clearForm)
  const setEventId = useStore((state) => state.setEventId)
+ const setIsError = useStore((state) => state.setIsError)
+ const isError = useStore((state) => state.isError)
 
  useEffect(() => {
   setEventId('')
@@ -37,6 +39,7 @@ function NewEventForm() {
  }
 
  const handleTitleChange = (text: string) => {
+  setIsError({ status: false, message: '' })
   setTitle(text)
  }
 
@@ -46,6 +49,7 @@ function NewEventForm() {
 
  return (
   <Pressable style={styles.container}>
+   <Text style={[styles.errorText, { opacity: isError ? 1 : 0 }]}>{isError.message}</Text>
    <TextInput
     value={title}
     placeholder='Enter event title'
@@ -84,7 +88,7 @@ const styles = StyleSheet.create({
  container: {
   position: 'absolute',
   paddingHorizontal: 12,
-  paddingTop: 40,
+  paddingTop: 20,
   backgroundColor: '#000000',
   width: '98%',
   aspectRatio: 1,
@@ -99,6 +103,12 @@ const styles = StyleSheet.create({
   borderBottomWidth: 1,
   borderColor: colors.fg,
   color: 'white',
+ },
+ errorText: {
+  color: 'red',
+  fontSize: 14,
+  marginVertical: 4,
+  textAlign: 'center',
  },
 })
 

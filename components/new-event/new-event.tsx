@@ -6,7 +6,6 @@ import { MaterialIcons } from '@expo/vector-icons'
 
 function NewEvent() {
  const color = useStore((state) => state.color)
- const clearForm = useStore((state) => state.clearForm)
  const setLocation = useStore((state) => state.setLocation)
  const setNotes = useStore((state) => state.setNotes)
 

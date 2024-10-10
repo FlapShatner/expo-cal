@@ -3,7 +3,7 @@ import { StyleSheet, View } from 'react-native'
 import { useQuery } from '@tanstack/react-query'
 import { eventsFetch } from '../../lib/events'
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import { days, Day as DayType } from '../../lib/date-utils'
+import { days, Day as DayType, splitMultiDayEvents } from '../../lib/date-utils'
 import { useStore } from '../../lib/store'
 import dayjs from '../../lib/dayjs'
 import Day from './day/day'
@@ -24,7 +24,9 @@ export default function Days({ year, month }: { year: number; month: number }) {
    .endOf('month')
    .add(2, 'day')
    .toDate()
-  return await eventsFetch({ startDate, endDate })
+  const events = await eventsFetch({ startDate, endDate })
+  const splitEvents = splitMultiDayEvents(events)
+  return splitEvents
  }
 
  const { data: calendarEvents, isLoading } = useQuery({

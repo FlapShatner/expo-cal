@@ -2,6 +2,7 @@ import { create } from 'zustand'
 import { ColorOption, colorOptions } from '../data/colorOptions'
 import { FormattedWeather } from './weather-types'
 import { CalendarEvent } from '../lib/events'
+import dayjs from './dayjs'
 
 type DayDetails = {
  date: string
@@ -10,6 +11,9 @@ type DayDetails = {
 }
 
 type State = {
+ isError: { status: boolean; message: string }
+ month: number
+ year: number
  detailVisible: boolean
  dayDetails: DayDetails | null
  color: ColorOption
@@ -26,6 +30,9 @@ type State = {
 }
 
 type Actions = {
+ setIsError: (isError: { status: boolean; message: string }) => void
+ setMonth: (month: number) => void
+ setYear: (year: number) => void
  setDetailVisible: (detailVisible: boolean) => void
  setColor: (newColor: ColorOption) => void
  setDayDetails: (dayDetails: DayDetails) => void
@@ -45,6 +52,9 @@ type Actions = {
 export type Store = State & Actions
 
 export const useStore = create<Store>()((set) => ({
+ isError: { status: false, message: '' },
+ month: Number(dayjs().format('M')),
+ year: Number(dayjs().format('YYYY')),
  color: colorOptions[0],
  detailVisible: false,
  dayDetails: null,
@@ -58,6 +68,9 @@ export const useStore = create<Store>()((set) => ({
  notes: '',
  location: '',
  timeZone: 'America/Chicago',
+ setIsError: (isError: { status: boolean; message: string }) => set(() => ({ isError })),
+ setMonth: (month: number) => set(() => ({ month })),
+ setYear: (year: number) => set(() => ({ year })),
  setColor: (newColor: ColorOption) => set(() => ({ color: newColor })),
  setDetailVisible: (detailVisible: boolean) => set({ detailVisible }),
  setDayDetails: (dayDetails: DayDetails) => set(() => ({ dayDetails })),

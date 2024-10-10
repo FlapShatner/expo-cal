@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import { getCalendars } from '../../lib/events'
 import { MaterialIcons } from '@expo/vector-icons'
@@ -9,6 +9,8 @@ import dayjs from '../../lib/dayjs'
 import * as Calendar from 'expo-calendar'
 
 export default function ControlButtons({ setIsPending, isEdit }) {
+ const isError = useStore((state) => state.isError)
+ const setIsError = useStore((state) => state.setIsError)
  const color = useStore((state) => state.color)
  const clearForm = useStore((state) => state.clearForm)
  const newStartDate = useStore((state) => state.newStartDate)
@@ -39,6 +41,10 @@ export default function ControlButtons({ setIsPending, isEdit }) {
  }
 
  const handleSubmit = async () => {
+  if (!title) {
+   setIsError({ status: true, message: 'Please enter a title for your event' })
+   return
+  }
   setIsPending(true)
   const calendars = await getCalendars()
   const primary = calendars.filter((c: any) => c.title.includes('@gmail.com'))

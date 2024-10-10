@@ -40,7 +40,7 @@ function EditEventForm() {
    if (event.location) setShowLocation(true)
   }
   fetchEvent()
- })
+ }, [])
 
  const handleCancel = (inputId: string) => {
   if (inputId === 'notes') {

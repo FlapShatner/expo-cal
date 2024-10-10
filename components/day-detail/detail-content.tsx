@@ -1,31 +1,44 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { View, StyleSheet, ScrollView, Pressable } from 'react-native'
 import { ColorOption } from '../../data/colorOptions'
-import { CalendarEvent, dayEventsFetch } from '../../lib/events'
+import { CalendarEvent, dayEventsFetch, eventsFetch } from '../../lib/events'
 import NewEvent from '../new-event/new-event'
 import DetailEvent from './detail-event'
 import dayjs from '../../lib/dayjs'
 import { useStore } from '../../lib/store'
-import { filterEvents } from '../../lib/date-utils'
+import { filterEvents, splitMultiDayEvents } from '../../lib/date-utils'
 import { useQuery } from '@tanstack/react-query'
+
 export default function DetailContent() {
  const date = useStore((state) => state.dayDetails?.date)
  const color = useStore((state) => state.color)
- const timeZone = useStore((state) => state.timeZone)
+ const year = useStore((state) => state.year)
+ const month = useStore((state) => state.month)
 
  const fetchEvents = async ({ queryKey }) => {
-  const [date] = queryKey
-  const startDate = dayjs(date).tz(timeZone).startOf('day').subtract(1, 'day').toString()
-  const endDate = dayjs(date).tz(timeZone).endOf('day').add(1, 'day').toString()
-  const events = await dayEventsFetch({ startDate, endDate })
-  if (!events) return
-  const filtered = filterEvents(events, date)
+  const [date, year, month] = queryKey
+  const m = Number(month)
+  const y = Number(year)
+  const startDate = dayjs()
+   .month(m - 1)
+   .year(y)
+   .startOf('month')
+   .toDate()
+  const endDate = dayjs()
+   .month(m - 1)
+   .year(y)
+   .endOf('month')
+   .add(2, 'day')
+   .toDate()
+  const events = await eventsFetch({ startDate, endDate })
+  const splitEvents = splitMultiDayEvents(events)
+  const filtered = filterEvents(splitEvents, date)
   return filtered
  }
 
  const { data: todayEvents, isLoading } = useQuery({
-  queryKey: [date],
-  queryFn: fetchEvents,
+  queryKey: [date, year, month],
+  queryFn: () => fetchEvents({ queryKey: [date, year, month] }),
   refetchOnWindowFocus: false,
  })
  return (

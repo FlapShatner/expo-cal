@@ -19,21 +19,27 @@ export default function DateSelect() {
   setNewEndDate(dayjs(date).tz(timeZone).toDate())
  }, [])
 
+ const startDateChange = (date: Date, newEndDate: Date) => {
+  if (date > newEndDate) setNewEndDate(date)
+  setNewStartDate(date)
+ }
+
  const showMode = (option: 'startDate' | 'endDate') => {
   if (option === 'startDate')
    DateTimePickerAndroid.open({
     mode: 'date',
-    timeZoneName: timeZone,
+    // timeZoneName: timeZone,
     value: newStartDate ? newStartDate : new Date(),
     onChange: (event: DateTimePickerEvent, selectedDate?: Date) => {
-     if (selectedDate) setNewStartDate(selectedDate)
+     if (selectedDate) startDateChange(selectedDate, newEndDate ? newEndDate : new Date())
     },
     is24Hour: true,
    })
   else if (option === 'endDate')
    DateTimePickerAndroid.open({
     mode: 'date',
-    timeZoneName: timeZone,
+    // timeZoneName: timeZone,
+    minimumDate: newStartDate ? newStartDate : new Date(),
     value: newEndDate ? newEndDate : new Date(),
     onChange: (event: DateTimePickerEvent, selectedDate?: Date) => {
      if (selectedDate) setNewEndDate(selectedDate)

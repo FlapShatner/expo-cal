@@ -44,4 +44,53 @@ originalId?: string;
 instanceId?: string;
 };
 
-I need to find any of these events whose endDate is a later day than the startDate. The start and end date values could be different times on the same day, but I only want to find events which end on a different day than they started. When such an event is encountered, I want to create an object containing the event's ID, as well as an array of all the dates from the startDate to the endDate. Could you please create a TS function do do that?
+I want to go through and push each event object into a new array, but I also need to find any of these events whose endDate is a later day than the startDate. The start and end date values could be different times on the same day, but I only want to find events which end on a different day than they started. When such an event is encountered, I want to push a copy of the event for every day in the sequence of days to the new events array. In the startDate and endDate fields for each copy, for both, the date should be the respective date from the sequence, and the "allDay" field should be true.
+
+for example,
+(these are truncated events for demonstration)
+this array:
+[
+{
+id:1,
+startDate:10/8/24
+endDate:10/8/24
+}
+{
+id:2,
+startDate:10/12/24
+endDate:10/14/24
+}
+{
+id:3,
+startDate:10/18/24
+endDate:10/18/24
+}
+]
+would become
+[
+{
+id:1,
+startDate:10/8/24
+endDate:10/8/24
+}
+{
+id:2,
+startDate:10/12/24
+endDate:10/12/24
+}
+{
+id:3,
+startDate:10/13/24
+endDate:10/13/24
+}
+{
+id:4,
+startDate:10/14/24
+endDate:10/14/24
+}
+{
+id:5,
+startDate:10/18/24
+endDate:10/18/24
+}
+]

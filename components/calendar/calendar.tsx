@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { StyleSheet, View } from 'react-native'
+import { useStore } from '../../lib/store'
 import dayjs from '../../lib/dayjs'
 import DayDetail from '../day-detail/day-detail'
 import Days from './days'
@@ -7,10 +8,15 @@ import Menu from './menu/menu'
 import MonthSelect from './month-select'
 
 export default function Calendar() {
- const initYear = Number(dayjs().format('YYYY'))
- const initMonth = Number(dayjs().format('M'))
- const [year, setYear] = useState(initYear)
- const [month, setMonth] = useState(initMonth)
+ //  const initYear = Number(dayjs().format('YYYY'))
+ //  const initMonth = Number(dayjs().format('M'))
+ //  const [year, setYear] = useState(initYear)
+ //  const [month, setMonth] = useState(initMonth)
+
+ const year = useStore((state) => state.year)
+ const month = useStore((state) => state.month)
+ const setYear = useStore((state) => state.setYear)
+ const setMonth = useStore((state) => state.setMonth)
 
  return (
   <View style={styles.container}>
